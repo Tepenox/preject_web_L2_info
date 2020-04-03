@@ -1,8 +1,10 @@
 var express = require('express');
 var mustache = require('mustache-express');
-
-
 var app = express();
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.engine('html', mustache());
 app.set('view engine', 'html');
 app.set('views', './views');
@@ -19,5 +21,18 @@ app.get('/login',(req,res) => {
 app.get('/signup',(req,res) => {
     res.render('signup');
 });
+
+app.get('/request-help-form',(req,res) => {
+    res.render('request-help-form');
+});
+
+app.post('/request-help-form-get',(req,res) => {
+    console.log("you are in post route ")
+    console.log(req.body);
+    res.end();
+    // res.redirect("/request-help-form");
+});
+
+
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
