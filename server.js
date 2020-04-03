@@ -26,7 +26,7 @@ app.get('/request-help-form',(req,res) => {
     res.render('request-help-form');
 });
 
-app.post('/request-help-form-get',(req,res) => {
+app.post('/request-help-form',(req,res) => {
     console.log("you are in post route ")
     console.log(req.body);
     res.end();
