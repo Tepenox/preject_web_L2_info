@@ -1,5 +1,6 @@
 var express = require('express');
 var mustache = require('mustache-express');
+var model = require('./model');
 var app = express();
 
 const bodyParser = require('body-parser');
@@ -23,8 +24,8 @@ app.get('/signup',(req,res) => {
 });
 
 app.post('/signup',(req,res) =>{
-    
-    console.log(req.body.first_name);
+    var id = model.createUser(req.body);
+    console.log("created with id = " + id);
     res.render('index');
 })
 
