@@ -7,30 +7,29 @@
         <script>
             function validateForm(){
                 var x = document.forms["TheForm"]["first_name"].value;
-                if(x != "")
-                    return true;
+                if(x == "")
+                    return false;
                 var x = document.forms["TheForm"]["last_name"].value;
-                if(x != "")
-                    return true;
+                if(x == "")
+                    return fale;
                 var x = document.forms["TheForm"]["age"].value;
-                if(x != "")
-                    return true;
+                if(x == "")
+                    return false;
                 var x = document.forms["TheForm"]["email"].value;
-                if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(x))
-                    return true;
-                if(x != "")
-                    return true;
+                if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(x)))
+                    return false;
+                if(x == "")
+                    return false;
                 var x = document.forms["TheForm"]["password"].value;
-                if(x != "")
-                    return true;
+                if(x == "")
+                    return false;
                 var x = document.forms["TheForm"]["password2"].value;
-                if(x != "")
-                    return true;
+                if(x == "")
+                    return false;
                 var x = document.forms["TheForm"]["description"].value;
-                if(x != "")
-                    return true;
-                alert("Some information are still empty ... Please fill them");
-                return false;
+                if(x == "")
+                    return false;
+                return true;
             }
         </script>
     </head>
