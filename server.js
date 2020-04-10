@@ -22,6 +22,12 @@ app.get('/signup',(req,res) => {
     res.render('signup');
 });
 
+app.post('/signup',(req,res) =>{
+    
+    console.log(req.body.first_name);
+    res.render('index');
+})
+
 app.get('/request-help-form',(req,res) => {
     res.render('request-help-form');
 });

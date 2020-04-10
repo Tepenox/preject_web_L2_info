@@ -39,7 +39,7 @@
         nothing to show yet
         <button class="button" type="button" onclick="window.location.href ='/'">Go to index</button>    
         
-        <form name="TheForm" method="get" action="\" onsubmit="return validateForm();">
+        <form name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form completely');return false;}">
             <p>
                 <label for="first_name"> Your first name</label>
                 <input type="text" name="first_name" id="first_name"/>
@@ -64,7 +64,7 @@
             </p>
             <p> 
                 <label for="password2"> Confirm your password please (got small eyes) </label>
-                <input type="password2" name="password2" id="password2"/>
+                <input type="password" name="password2" id="password2"/>
             </p>
             <p>
                 <label for="description">A small description of yourself </label>
