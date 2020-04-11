@@ -1,3 +1,8 @@
+drop table if exists message;
+drop table if exists help_offers;
+drop table if exists help_requests;
+drop table if exists users;
+
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -12,7 +17,8 @@ CREATE TABLE users (
 CREATE TABLE help_requests (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     owner_id INTEGER NOT NULL,
-    date Text NOT NULL,
+    date TEXT NOT NULL,
+    type TEXT NOT NULL,
     description INTEGER NOT NULL,
     FOREIGN KEY (owner_id)
        REFERENCES users (id) 
@@ -46,8 +52,8 @@ insert into users (first_name,last_name,age,email,password) values('Anass','EL A
 insert into users (first_name,last_name,age,email,password) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678');
 
 
-insert into help_requests (owner_id, date ,description) values (1 ,datetime('now'),'hi i need help on some css stuff');
-insert into help_requests (owner_id, date ,description) values (2 ,datetime('now'),'i need help on java stuff');
+insert into help_requests (owner_id, date ,type,description) values (1 ,datetime('now'),'technology','hi i need help on some css stuff');
+insert into help_requests (owner_id, date ,type,description) values (2 ,datetime('now'),'technology','i need help on java stuff');
 
 
 insert into help_offers (helper_id , request_id) values (1,2);
@@ -55,8 +61,3 @@ insert into help_offers (helper_id , request_id) values (1,2);
 
 insert into messages (sender_id,receiver_id,date,message) values (2,1, datetime('now') , "thank you for sending a help offer do you think you can help me ?");
 
-
-drop table users;
-drop table help_requests;
-drop table help_offers;
-drop table messages;
