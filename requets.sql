@@ -19,6 +19,7 @@ CREATE TABLE help_requests (
     owner_id INTEGER NOT NULL,
     date TEXT NOT NULL,
     type TEXT NOT NULL,
+    title TEXT NOT NULL,
     description TEXT NOT NULL,
     FOREIGN KEY (owner_id)
        REFERENCES users (id) 
@@ -52,8 +53,8 @@ insert into users (first_name,last_name,age,email,password) values('Anass','EL A
 insert into users (first_name,last_name,age,email,password) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678');
 
 
-insert into help_requests (owner_id, date ,type,description) values (1 ,datetime('now'),'technology','hi i need help on some css stuff');
-insert into help_requests (owner_id, date ,type,description) values (2 ,datetime('now'),'technology','i need help on java stuff');
+insert into help_requests (owner_id, date ,type,title,description) values (1 ,datetime('now'),'Coding',' I need help on some css stuff','Pariatur cupidatat dolor magna tempor anim exercitation sint officia commodo mollit incididunt aute aute. Non aliqua cillum velit esse irure. Adipisicing nulla laborum id reprehenderit officia anim anim dolor et eiusmod ipsum officia et culpa. Tempor excepteur laboris consectetur commodo aliqua non dolor do. Nostrud laborum nostrud excepteur id aliqua dolor adipisicing ex pariatur exercitation quis magna adipisicing.');
+insert into help_requests (owner_id, date ,type,title,description) values (2 ,datetime('now'),'Coding','I need help on java stuff','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
 
 
 insert into help_offers (helper_id , request_id) values (1,2);

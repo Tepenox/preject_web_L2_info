@@ -48,6 +48,7 @@ app.post('/help-requests',(req,res) => {
     console.log(req.body);
     var helpRequest = {
         owner_id : currentUserId,
+        title : req.body.title,
         type : req.body.type,
         description :req.body.description,
     }
