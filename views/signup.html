@@ -13,7 +13,7 @@
                 if(x == "")
                     return fale;
                 var x = document.forms["TheForm"]["age"].value;
-                if(x == "")
+                if(x == "" && typeof(x)== number)
                     return false;
                 var x = document.forms["TheForm"]["email"].value;
                 if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(x)))
@@ -22,8 +22,10 @@
                     return false;
                 var x = document.forms["TheForm"]["password"].value;
                 var y = document.forms["TheForm"]["password2"].value;
-                if(x == "" || x!=y)
+                if(x == "" || x!=y){
                     return false;
+                }
+                    
                 var x = document.forms["TheForm"]["description"].value;
                 if(x == "")
                     return false;
@@ -37,7 +39,7 @@
         nothing to show yet
         <button class="button" type="button" onclick="window.location.href ='/'">Go to index</button>    
         
-        <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form completely');return false;}">
+        <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
             <p>
                 <label for="first_name"> Your first name</label>
                 <input type="text" name="first_name" id="first_name"/>
