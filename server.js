@@ -33,11 +33,11 @@ app.post('/signup',(req,res) =>{
     res.render('index');
 })
 
-app.get('/request-help-form',(req,res) => {
+app.get('/help-requests/new',(req,res) => {
     res.render('request-help-form');
 });
 
-app.post('/request-help-form',(req,res) => {
+app.post('/help-requests',(req,res) => {
     console.log(req.body);
     var helpRequest = {
         owner_id : currentUserId,
