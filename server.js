@@ -1,6 +1,7 @@
 var express = require('express');
 var mustache = require('mustache-express');
-var model = require('./model');
+var User = require('./model/User');
+var HelpRequest = require('./model/HelpRequest');
 var app = express();
 var methodeOverride = require("method-override");
 
@@ -28,15 +29,15 @@ app.get('/signup',(req,res) => {
 
 app.post('/signup',(req,res) =>{
     console.log(req.body);
-    var id = model.createUser(req.body);
+    var id = User.create(req.body);
     console.log("created with id = " + id);
     res.render('index');
 })
 
 app.get('/help-requests', (req,res) => {
     
-    console.log(model.helpRequetsList());
-    res.render('help-request-list', {data: model.helpRequetsList()});
+    console.log(HelpRequest.list());
+    res.render('help-request-list', {data: HelpRequest.list()});
 });
 
 app.get('/help-requests/new',(req,res) => {
@@ -50,7 +51,7 @@ app.post('/help-requests',(req,res) => {
         type : req.body.type,
         description :req.body.description,
     }
-    var id = model.createHelpRequest(helpRequest);
+    var id = HelpRequest.create(helpRequest);
     console.log(id);
     res.redirect('/help-requests');
     // res.redirect("/request-help-form");
