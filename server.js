@@ -59,5 +59,12 @@ app.post('/help-requests',(req,res) => {
 });
 
 
+app.get('/help-request/:id',(req,res) => {
+    console.log(HelpRequest.find(req.params.id));
+    res.render('help-request-details', HelpRequest.find(req.params.id));
+
+})
+
+
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
