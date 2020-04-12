@@ -16,6 +16,10 @@ exports.find = function (id){
 };
 
 exports.list = function(){
-    var list = db.prepare('select * from help_requests;').all();
-    return list;
+    var requestList = db.prepare('select * from help_requests;').all();
+    for (request of requestList ) {
+        request.ownerFirstName = db.prepare('select first_name from users where id = ? ').get(request.owner_id).first_name; 
+        request.ownerLastName = db.prepare('select last_name from users where id = ? ').get(request.owner_id).last_name;
+    }
+    return requestList;
 };

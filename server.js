@@ -5,7 +5,7 @@ var HelpRequest = require('./model/HelpRequest');
 var app = express();
 var methodeOverride = require("method-override");
 
-var currentUserId = 1; 
+var currentUserId = 2; 
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));

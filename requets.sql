@@ -19,7 +19,7 @@ CREATE TABLE help_requests (
     owner_id INTEGER NOT NULL,
     date TEXT NOT NULL,
     type TEXT NOT NULL,
-    description INTEGER NOT NULL,
+    description TEXT NOT NULL,
     FOREIGN KEY (owner_id)
        REFERENCES users (id) 
 );
