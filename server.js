@@ -27,6 +27,7 @@ app.get('/signup',(req,res) => {
 });
 
 app.post('/signup',(req,res) =>{
+    console.log(req.body);
     var id = model.createUser(req.body);
     console.log("created with id = " + id);
     res.render('index');
