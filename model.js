@@ -13,3 +13,12 @@ exports.createHelpRequest= function (helpRequest) {
   var id = db.prepare(" insert into help_requests (owner_id, date,  type ,description) VALUES (@owner_id, datetime('now'),@type, @description)").run(helpRequest).lastInsertRowid;
     return id ;
 }
+
+exports.findHelpRequest = function (id){
+
+};
+
+exports.helpRequetsList = function (){
+    var list = db.prepare('select * from help_requests;').all();
+    return list;
+};

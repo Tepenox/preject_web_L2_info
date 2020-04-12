@@ -33,8 +33,14 @@ app.post('/signup',(req,res) =>{
     res.render('index');
 })
 
+app.get('/help-requests', (req,res) => {
+    
+    console.log(model.helpRequetsList());
+    res.render('help-request-list', {data: model.helpRequetsList()});
+});
+
 app.get('/help-requests/new',(req,res) => {
-    res.render('request-help-form');
+    res.render('new-help-request-form');
 });
 
 app.post('/help-requests',(req,res) => {
@@ -46,7 +52,7 @@ app.post('/help-requests',(req,res) => {
     }
     var id = model.createHelpRequest(helpRequest);
     console.log(id);
-    res.end();
+    res.redirect('/help-requests');
     // res.redirect("/request-help-form");
 });
 
