@@ -2,6 +2,9 @@ var express = require('express');
 var mustache = require('mustache-express');
 var model = require('./model');
 var app = express();
+var methodeOverride = require("method-override");
+
+var currentUserId = 1; 
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,8 +38,14 @@ app.get('/request-help-form',(req,res) => {
 });
 
 app.post('/request-help-form',(req,res) => {
-    console.log("you are in post route ")
     console.log(req.body);
+    var helpRequest = {
+        owner_id : currentUserId,
+        type : req.body.type,
+        description :req.body.description,
+    }
+    var id = model.createHelpRequest(helpRequest);
+    console.log(id);
     res.end();
     // res.redirect("/request-help-form");
 });
