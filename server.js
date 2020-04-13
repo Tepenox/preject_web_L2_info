@@ -112,10 +112,18 @@ app.get("/messages/:id", (req,res) => {
         }
     }
     console.log(messages);
-    res.render('messages', {data : messages})
+    res.render('messages', {data : messages , receiverId : req.params.id})
 
 
 });
 
-
+app.post("/messages/:id", (req,res) => {
+    var id = Message.create(
+        {sender_id: currentUserId , 
+        receiver_id : req.params.id ,
+        content : req.body.message });
+    console.log(id);
+    res.redirect('/messages/'+ req.params.id);
+    
+});
 app.listen(3000, () => console.log('listening on http://localhost:3000'));

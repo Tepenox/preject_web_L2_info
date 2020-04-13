@@ -4,8 +4,7 @@ let db = new Sqlite('db.sqlite');
 
 
 exports.create = function (message) {
-    db.prepare('insert into messages (sender_id , receiver_id, date , message) \
-        values (@sender_id , @receiver_id, date.now() , @content)').run(message).lastInsertRowid;
+    var id = db.prepare("insert into messages (sender_id , receiver_id, date , message) values (@sender_id , @receiver_id, datetime('now') , @content);").run(message).lastInsertRowid;
     return id;
 }
 
