@@ -10,8 +10,8 @@
         <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}} {{#ownedByCurrentUser}} <span style="color: red;">(me)</span>{{/ownedByCurrentUser}}</h2>
         <p><b>{{message}}</b> at {{date}}</p>
     {{/data}}
-    <form action="/messages/id" method="POST">
-        message :<input type="text" name="message">
+    <form action="/messages/{{receiverId}}" method="POST">
+        message :<input type="text" name="message" autofocus>
     </form>
 </body>
 </html>
