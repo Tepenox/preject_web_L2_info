@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation With </title>
+</head>
+<body>
+    {{#data}}
+        <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}} {{#ownedByCurrentUser}} <span style="color: red;">(me)</span>{{/ownedByCurrentUser}}</h2>
+        <p>{{message}}</p>
+    {{/data}}
+</body>
+</html>

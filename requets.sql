@@ -67,4 +67,4 @@ insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-
 insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:13:20' , "yes just use this toArrayMethode in the list class");
 insert into messages (sender_id,receiver_id,date,message) values (3,2, '2020-04-12 23:13:19' , "hey i can offer u help");
 
-select messages.id as id , messages.message as message from messages join users on (users.id = messages.sender_id) where (sender_id = 1 and receiver_id = 2) or (sender_id = 2 and receiver_id = 1 ) 
+-- select messages.id as id , messages.message as message from messages join users on (users.id = messages.sender_id) where (sender_id = 1 and receiver_id = 2) or (sender_id = 2 and receiver_id = 1 ) 
