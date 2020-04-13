@@ -30,7 +30,7 @@ function is_authenticated(req, res, next){
         res.locals.authenticated = true;
         return next();
     }
-    res.status(401).send('authentication required');
+    res.redirect('/login');
 }
 
 
@@ -50,13 +50,18 @@ app.get('/login',(req,res) => {
 app.post('/login',(req,res) =>{
     var id = User.connect(req.body);
     if(id == -1){
-        res.redirect('/login/:true');
+        res.redirect('/login');
     }
     else{
         console.log('connected');
         req.session.id = id;
         res.redirect('/');
     }
+})
+
+app.get('/logout',(req,res) =>{
+    req.session = null;
+    res.render('logout');
 })
 
 app.get('/signup',(req,res) => {
@@ -71,17 +76,17 @@ app.post('/signup',(req,res) =>{
     res.render('index');
 })
 
-app.get('/help-requests', (req,res) => {
+app.get('/help-requests', is_authenticated, (req,res) => {
     
     console.log(HelpRequest.list());
     res.render('help-request-list', {data: HelpRequest.list()});
 });
 
-app.get('/help-requests/new',(req,res) => {
+app.get('/help-requests/new', is_authenticated,(req,res) => {
     res.render('new-help-request-form');
 });
 
-app.post('/help-requests',(req,res) => {
+app.post('/help-requests', is_authenticated,(req,res) => {
     console.log(req.body);
     var helpRequest = {
         owner_id : currentUserId,
@@ -96,13 +101,13 @@ app.post('/help-requests',(req,res) => {
 });
 
 
-app.get('/help-request/:id',(req,res) => {
+app.get('/help-request/:id', is_authenticated,(req,res) => {
     console.log(HelpRequest.find(req.params.id));
     res.render('help-request-details', HelpRequest.find(req.params.id));
 
 })
 
-app.get("/messages/:id", (req,res) => {
+app.get("/messages/:id", is_authenticated,(req,res) => {
     var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
     for(message of messages){
         if(message.senderId == currentUserId){
@@ -117,7 +122,7 @@ app.get("/messages/:id", (req,res) => {
 
 });
 
-app.post("/messages/:id", (req,res) => {
+app.post("/messages/:id", is_authenticated, (req,res) => {
     var id = Message.create(
         {sender_id: currentUserId , 
         receiver_id : req.params.id ,
