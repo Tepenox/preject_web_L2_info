@@ -2,6 +2,7 @@ var express = require('express');
 var mustache = require('mustache-express');
 var User = require('./model/User');
 var HelpRequest = require('./model/HelpRequest');
+var Message = require('./model/Message');
 var app = express();
 var methodeOverride = require("method-override");
 
@@ -65,6 +66,12 @@ app.get('/help-request/:id',(req,res) => {
 
 })
 
+app.get("/messages/:id", (req,res) => {
+    var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
+    console.log(messages);
+
+
+});
 
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
