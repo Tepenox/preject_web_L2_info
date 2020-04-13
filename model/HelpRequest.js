@@ -1,5 +1,4 @@
 
-//traitement base de donnée
 const Sqlite = require('better-sqlite3');
 
 let db = new Sqlite('db.sqlite');
@@ -12,7 +11,10 @@ exports.create= function (helpRequest) {
 }
 
 exports.find = function (id){
-
+    var helpRequest = db.prepare('select * from help_requests where id = ? ').get(id);
+    helpRequest.ownerFirstName = db.prepare('select first_name from users where id = ? ').get(helpRequest.owner_id).first_name;
+    helpRequest.ownerLastName = db.prepare('select last_name from users where id = ? ').get(helpRequest.owner_id).last_name;
+    return helpRequest;
 };
 
 exports.list = function(){

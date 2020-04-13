@@ -1,4 +1,4 @@
-drop table if exists message;
+drop table if exists messages;
 drop table if exists help_offers;
 drop table if exists help_requests;
 drop table if exists users;
@@ -51,6 +51,7 @@ CREATE TABLE messages (
 
 insert into users (first_name,last_name,age,email,password) values('Anass','EL AFYA',22,'anasselafya@gmail.com','12345678');
 insert into users (first_name,last_name,age,email,password) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678');
+insert into users (first_name,last_name,age,email,password) values('Nicolas','YAVERIAN',20,'nicolasyaverian@gmail.com','12345678');
 
 
 insert into help_requests (owner_id, date ,type,title,description) values (1 ,datetime('now'),'Coding',' I need help on some css stuff','Pariatur cupidatat dolor magna tempor anim exercitation sint officia commodo mollit incididunt aute aute. Non aliqua cillum velit esse irure. Adipisicing nulla laborum id reprehenderit officia anim anim dolor et eiusmod ipsum officia et culpa. Tempor excepteur laboris consectetur commodo aliqua non dolor do. Nostrud laborum nostrud excepteur id aliqua dolor adipisicing ex pariatur exercitation quis magna adipisicing.');
@@ -60,5 +61,10 @@ insert into help_requests (owner_id, date ,type,title,description) values (2 ,da
 insert into help_offers (helper_id , request_id) values (1,2);
 
 
-insert into messages (sender_id,receiver_id,date,message) values (2,1, datetime('now') , "thank you for sending a help offer do you think you can help me ?");
+insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:11:19' , "thank you for sending a help offer do you think you can help me ?");
+insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:12:19' , "for sure what seems to be the problem exactly");
+insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:13:19' , "do you know how to convert an List of integer to an Array in java");
+insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:13:20' , "yes just use this toArrayMethode in the list class");
+insert into messages (sender_id,receiver_id,date,message) values (3,2, '2020-04-12 23:13:19' , "hey i can offer u help");
 
+-- select messages.id as id , messages.message as message from messages join users on (users.id = messages.sender_id) where (sender_id = 1 and receiver_id = 2) or (sender_id = 2 and receiver_id = 1 ) 

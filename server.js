@@ -2,10 +2,11 @@ var express = require('express');
 var mustache = require('mustache-express');
 var User = require('./model/User');
 var HelpRequest = require('./model/HelpRequest');
+var Message = require('./model/Message');
 var app = express();
 var methodeOverride = require("method-override");
 
-var currentUserId = 2; 
+var currentUserId = 1; 
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -59,6 +60,27 @@ app.post('/help-requests',(req,res) => {
     // res.redirect("/request-help-form");
 });
 
+
+app.get('/help-request/:id',(req,res) => {
+    console.log(HelpRequest.find(req.params.id));
+    res.render('help-request-details', HelpRequest.find(req.params.id));
+
+})
+
+app.get("/messages/:id", (req,res) => {
+    var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
+    for(message of messages){
+        if(message.senderId == currentUserId){
+            message.ownedByCurrentUser = true;
+        }else{
+            message.ownedByCurrentUser = false;
+        }
+    }
+    console.log(messages);
+    res.render('messages', {data : messages})
+
+
+});
 
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
