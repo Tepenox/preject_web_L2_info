@@ -1,6 +1,10 @@
 here is the login page</br>
-<p>
-    Username : <input class="input-text" name="username" type="text"></br>
-    Password : <input class="input-text" name="password" type="password"></br>
-</p>
+<form action="/login" method="post">
+    <p>
+        Email : <input class="input-text" name="email" type="text"></br>
+        Password : <input class="input-text" name="password" type="password"></br>
+    </p>
+    <input type="submit" value="Valider">
+</form>
+
 No account ? Sign up <a href="/signup">here</a>

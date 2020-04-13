@@ -8,6 +8,14 @@ var methodeOverride = require("method-override");
 
 var currentUserId = 1; 
 
+//========Session===========
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+    secret:'password',
+}));
+
+
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -15,18 +23,45 @@ app.engine('html', mustache());
 app.set('view engine', 'html');
 app.set('views', './views');
 
+//========Middleware=============
+function is_authenticated(req, res, next){
+    if(req.session.id !== undefined){
+        console.log('================middleware================');
+        res.locals.authenticated = true;
+        return next();
+    }
+    res.status(401).send('authentication required');
+}
 
-app.get('/',(req,res) => {
-    res.render('index');
+
+app.get('/', is_authenticated, (req,res) => {
+    console.log(res.locals.authenticated);
+    if(res.locals.authenticated==true){
+        res.render('index');
+    }else{
+        res.redirect('/login');
+    }
 });
 
 app.get('/login',(req,res) => {
     res.render('login');
 });
 
+app.post('/login',(req,res) =>{
+    var id = User.connect(req.body);
+    if(id == -1){
+        res.redirect('/login/:true');
+    }
+    else{
+        console.log('connected');
+        req.session.id = id;
+        res.redirect('/');
+    }
+})
+
 app.get('/signup',(req,res) => {
     console.log("goto signup page");
-    res.render('signup',);
+    res.render('signup');
 });
 
 app.post('/signup',(req,res) =>{
