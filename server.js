@@ -24,7 +24,8 @@ app.get('/login',(req,res) => {
 });
 
 app.get('/signup',(req,res) => {
-    res.render('signup');
+    console.log("goto signup page");
+    res.render('signup.html');
 });
 
 app.post('/signup',(req,res) =>{
