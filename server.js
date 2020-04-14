@@ -2,12 +2,14 @@ var express = require('express');
 var mustache = require('mustache-express');
 var User = require('./model/User');
 var HelpRequest = require('./model/HelpRequest');
+var HelpOffer = require('./model/HelpOffer')
 var Message = require('./model/Message');
 var app = express();
-var methodeOverride = require("method-override");
+var methodOverride = require("method-override");
 
-var currentUserId = 1; 
+var currentUserId = 2; 
 
+app.use(methodOverride('_method'))
 //========Session===========
 const cookieSession = require('cookie-session');
 app.use(cookieSession({
@@ -101,7 +103,7 @@ app.post('/help-requests', is_authenticated,(req,res) => {
 });
 
 
-app.get('/help-request/:id', is_authenticated,(req,res) => {
+app.get('/help-requests/:id', is_authenticated,(req,res) => {
     console.log(HelpRequest.find(req.params.id));
     res.render('help-request-details', HelpRequest.find(req.params.id));
 
@@ -131,4 +133,11 @@ app.post("/messages/:id", is_authenticated, (req,res) => {
     res.redirect('/messages/'+ req.params.id);
     
 });
+
+app.post("/help-offers/new/:id",(req,res) => {
+    var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id });
+    console.log(id);
+    res.redirect('/help-requests')
+})
+
 app.listen(3000, () => console.log('listening on http://localhost:3000'));

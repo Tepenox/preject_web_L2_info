@@ -29,6 +29,7 @@ CREATE TABLE help_offers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     helper_id INTEGER NOT NULL,
     request_id INTEGER NOT NULL,
+    date TEXT NOT NULL,
     FOREIGN KEY (helper_id)
        REFERENCES users(id),
     FOREIGN KEY (request_id)
@@ -58,7 +59,10 @@ insert into help_requests (owner_id, date ,type,title,description) values (1 ,da
 insert into help_requests (owner_id, date ,type,title,description) values (2 ,datetime('now'),'Coding','I need help on java stuff','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
 
 
-insert into help_offers (helper_id , request_id) values (1,2);
+insert into help_offers (helper_id , request_id , date ) values (1,2, datetime('now'));
+insert into help_offers (helper_id , request_id , date ) values (3,2, datetime('now'));
+insert into help_offers (helper_id , request_id , date ) values (2,1, datetime('now'));
+insert into help_offers (helper_id , request_id , date ) values (3,1, datetime('now'));
 
 
 insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:11:19' , "thank you for sending a help offer do you think you can help me ?");
@@ -68,3 +72,4 @@ insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-
 insert into messages (sender_id,receiver_id,date,message) values (3,2, '2020-04-12 23:13:19' , "hey i can offer u help");
 
 -- select messages.id as id , messages.message as message from messages join users on (users.id = messages.sender_id) where (sender_id = 1 and receiver_id = 2) or (sender_id = 2 and receiver_id = 1 ) 
+-- select ho.helper_id as helper_id, ho.request_id as request_id ,ho.date as date, hr.title as helpRequestTitle, u.last_name as helperLastName , u.first_name as helperFirstName from help_offers ho join users u on ho.helper_id = u.id join help_requests hr on hr.id = ho.request_id  where request_id in (select id from help_requests where owner_id = 2);

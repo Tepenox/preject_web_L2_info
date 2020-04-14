@@ -10,6 +10,9 @@
     <h3> by <span style="text-transform: uppercase;">{{ownerLastName}}</span> {{ownerFirstName}}</h3>
     <p>type:<b>{{type}}</b></p>
     <p>{{description}}</p>
+    <form action="/help-offers/new/{{id}}" method="POST">
+        <input type="submit" value="send help offer">    
+    </form>
 
 </body>
 </html>
