@@ -9,7 +9,11 @@ var methodOverride = require("method-override");
 
 var currentUserId = 2; 
 
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+
+app.use(express.static('/css'));
+//app.use(express.static('public'));
+
 //========Session===========
 const cookieSession = require('cookie-session');
 app.use(cookieSession({
@@ -34,6 +38,9 @@ function is_authenticated(req, res, next){
     }
     res.redirect('/login');
 }
+app.get('/style.css', (req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
 
 
 app.get('/', is_authenticated, (req,res) => {
