@@ -7,11 +7,11 @@
 </head>
 <body>
     <h1>Help Offers received </h1>
-    {{#data}}
     <p>for your help request:</p>
-    <h3>{{helpRequestTitle}}</h3>
+    {{#data}}
+    <h3><a href="/help-offers/{{id}}"></a>{{helpRequestTitle}}</h3>
     <p>from <b><span style="text-transform: uppercase;">{{helperLastName}}</span></b> {{helperFirstName}}</p>
-    <br>
+    <br>    
     {{/data}}
     
 

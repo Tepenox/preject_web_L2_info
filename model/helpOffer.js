@@ -8,9 +8,16 @@ exports.create = function (helpOffer) {
     return id;
 }
 
+exports.find = function(id){
+    var helpOffer = db.prepare("select ho.id as id , ho.helper_id as helper_id, ho.request_id as request_id ,ho.date as date, hr.title \
+    as helpRequestTitle, u.last_name as helperLastName , u.first_name as helperFirstName, ho.description as helpOfferDescription from help_offers ho join users u \
+    on ho.helper_id = u.id join help_requests hr on hr.id = ho.request_id where ho.id = ?").get(id);
+    return helpOffer;
+}
+
 //list helpoffers recived by a user
 exports.listForUserId = function ( userId ){
-    var helpRequestsOfaUser = db.prepare("select ho.helper_id as helper_id, ho.request_id as request_id ,ho.date as date, hr.title \
+    var helpOffersOfaUser = db.prepare("select ho.id as id , ho.helper_id as helper_id, ho.request_id as request_id ,ho.date as date, hr.title \
     as helpRequestTitle, u.last_name as helperLastName , u.first_name as helperFirstName, ho.description as helpOfferDescription from help_offers ho join users u \
     on ho.helper_id = u.id join help_requests hr on hr.id = ho.request_id  where request_id in (select id from help_requests where owner_id = ?);")
     .all(userId);

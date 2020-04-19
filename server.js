@@ -116,7 +116,7 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 
 })
 
-app.get("/messages/:id", is_authenticated,(req,res) => {
+app.get('/messages/:id', is_authenticated,(req,res) => {
     var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
     for(message of messages){
         if(message.senderId == currentUserId){
@@ -131,7 +131,7 @@ app.get("/messages/:id", is_authenticated,(req,res) => {
 
 });
 
-app.post("/messages/:id", is_authenticated, (req,res) => {
+app.post('/messages/:id', is_authenticated, (req,res) => {
     var id = Message.create(
         {sender_id: currentUserId , 
         receiver_id : req.params.id ,
@@ -141,15 +141,19 @@ app.post("/messages/:id", is_authenticated, (req,res) => {
     
 });
 
-app.post("/help-offers/new/:id",(req,res) => {
+app.post('/help-offers/new/:id',(req,res) => { // Todo add message
     var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id });
     console.log(id);
     res.redirect('/help-requests')
 })
 
-app.get("/help-offers",(req,res) =>{
+app.get('/help-offers',(req,res) =>{
     console.log(HelpOffer.listForUserId(currentUserId));
     res.render("help-offers-list",{data:HelpOffer.listForUserId(currentUserId)});
 })
 
+app.get('/help-offers/:id',(req,res) =>{
+    console.log(req.params.id);
+    res.render("help-offer-details", HelpOffer.find(req.params.id));
+})
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
