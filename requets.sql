@@ -29,7 +29,7 @@ CREATE TABLE help_offers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     helper_id INTEGER NOT NULL,
     request_id INTEGER NOT NULL,
-    message TEXT NOT NULL,
+    description TEXT NOT NULL,
     date TEXT NOT NULL,
     FOREIGN KEY (helper_id)
        REFERENCES users(id),
@@ -60,10 +60,10 @@ insert into help_requests (owner_id, date ,type,title,description) values (1 ,da
 insert into help_requests (owner_id, date ,type,title,description) values (2 ,datetime('now'),'Coding','I need help on java stuff','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
 
 
-insert into help_offers (helper_id , request_id , message, date ) values (1,2,'hey i want to help in this one i m anass' ,datetime('now'));
-insert into help_offers (helper_id , request_id , message,date ) values (3,2, 'hey i want to help in this one i m nicolas',datetime('now'));
-insert into help_offers (helper_id , request_id , message,date ) values (2,1, 'hey i want to help in this one i m cedric',datetime('now'));
-insert into help_offers (helper_id , request_id , message, date ) values (3,1, 'hey i want to help in this one i m nicolas',datetime('now'));
+insert into help_offers (helper_id , request_id , description, date ) values (1,2,'hey i want to help in this one i m anass' ,datetime('now'));
+insert into help_offers (helper_id , request_id , description,date ) values (3,2, 'hey i want to help in this one i m nicolas',datetime('now'));
+insert into help_offers (helper_id , request_id , description,date ) values (2,1, 'hey i want to help in this one i m cedric',datetime('now'));
+insert into help_offers (helper_id , request_id , description, date ) values (3,1, 'hey i want to help in this one i m nicolas',datetime('now'));
 
 
 insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:11:19' , "thank you for sending a help offer do you think you can help me ?");

@@ -147,4 +147,9 @@ app.post("/help-offers/new/:id",(req,res) => {
     res.redirect('/help-requests')
 })
 
+app.get("/help-offers",(req,res) =>{
+    console.log(HelpOffer.listForUserId(currentUserId));
+    res.render("help-offers-list",{data:HelpOffer.listForUserId(currentUserId)});
+})
+
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
