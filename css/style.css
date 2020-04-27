@@ -1,14 +1,46 @@
+html, body{
+    height:100%;
+}
 .project-content{
     margin-left:auto;
     margin-right:auto;
 }
 
-h1{
-    color:red;
+.pageContent{
+    border: 5px solid rgba(200, 200, 200, 0.5);
+    border-radius: 0.5em;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+
+.header h1{
+    margin-left: 25%;
+    margin-right: 25%;
+    /*border: 5px solid grey;
+    border-radius: 1em;*/
+}
+
+.container{
+    text-align:center;
 }
 
 .AMU-logo{
-    width:200px;
-    padding-right:10px;
+    width: 200px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border: 5px solid #e9ecef;
+    background-color: white;
+    border-radius: 0.5em;
 }
 
+#bodyLoginPage{
+    background-image: url("https://i.pinimg.com/originals/0a/07/49/0a07496f29ff32163f3d55d8af0d91bb.jpg");
+    background-size: 1600px;
+    background-repeat: no-repeat;
+    min-width: 1500px;
+    padding-top: 5%;
+    text-align: center;
+}
