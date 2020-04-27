@@ -7,7 +7,7 @@ var Message = require('./model/Message');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 2; 
+var currentUserId = 1; 
 
 app.use(methodOverride('_method'));
 
@@ -153,7 +153,25 @@ app.get('/help-offers',(req,res) =>{
 })
 
 app.get('/help-offers/:id',(req,res) =>{
-    console.log(req.params.id);
-    res.render("help-offer-details", HelpOffer.find(req.params.id));
+    var helpOffer = HelpOffer.find(req.params.id);
+    if(helpOffer.accepted == 'true'){
+        helpOffer.showAcceptedMessage = 'true';
+    }else{
+        helpOffer.showAcceptMessage = 'true';
+
+    }
+    console.log(helpOffer);
+    
+    res.render("help-offer-details", helpOffer);
 })
+
+
+app.get('/help-offers/:id/accept',(req,res) =>{
+    var helpOffer = HelpOffer.find(req.params.id);
+    helpOffer.accepted = 'true';
+    console.log(helpOffer);
+    HelpOffer.edit(req.params.id,helpOffer);
+    res.redirect('/help-offers/'+ req.params.id)
+})
+
 app.listen(3000, () => console.log('listening on http://localhost:3000'));

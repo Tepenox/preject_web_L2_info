@@ -31,6 +31,7 @@ CREATE TABLE help_offers (
     request_id INTEGER NOT NULL,
     description TEXT NOT NULL,
     date TEXT NOT NULL,
+    accepted DEFAULT 'false',
     FOREIGN KEY (helper_id)
        REFERENCES users(id),
     FOREIGN KEY (request_id)
