@@ -21,6 +21,6 @@ exports.listForUserId = function ( userId ){
     as helpRequestTitle, u.last_name as helperLastName , u.first_name as helperFirstName, ho.description as helpOfferDescription from help_offers ho join users u \
     on ho.helper_id = u.id join help_requests hr on hr.id = ho.request_id  where request_id in (select id from help_requests where owner_id = ?);")
     .all(userId);
-    return helpRequestsOfaUser;
+    return helpOffersOfaUser;
 }
 

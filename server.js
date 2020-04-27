@@ -149,7 +149,7 @@ app.post('/help-offers/new/:id',(req,res) => { // Todo add message
 
 app.get('/help-offers',(req,res) =>{
     console.log(HelpOffer.listForUserId(currentUserId));
-    res.render("help-offers-list",{data:HelpOffer.listForUserId(currentUserId)});
+    res.render("help-offer-list",{data:HelpOffer.listForUserId(currentUserId)});
 })
 
 app.get('/help-offers/:id',(req,res) =>{
