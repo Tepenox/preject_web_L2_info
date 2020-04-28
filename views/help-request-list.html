@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Requests</title>
-</head>
-<body>
-    {{#data}}
-        <h1><a href="help-requests/{{id}}">{{title}}</a></h1>
-        <h3> by <span style="text-transform: uppercase;">{{ownerLastName}}</span> {{ownerFirstName}}</h3>
-        <p>type:<b>{{type}}</b></p>
-    {{/data}}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>VJ Help</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body id="bodyHelpRequestList">
+        <p class="lead">
+            <h1>Here is the list of the help-requests</h1>
+        </p>
+        <div id=containerList>
+            {{#data}}
+            <button class="helpRequest" type="button" onclick="window.location.href ='help-requests/{{id}}'">
+                <h1>{{title}}</h1>
+                <h3> by <span style="text-transform: uppercase;">{{ownerLastName}}</span> {{ownerFirstName}}</h3>
+                <p>type : <b>{{type}}</b></p>
+            </button>
+            {{/data}}
+        </div>
+        <button id="return" type="button" onclick="window.location.href ='/'"><b>Return to main menu</b></button>
+        <img align="right" class="AMU-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d4/Aix-Marseille_Universit%C3%A9_%28Logo%29.svg/1200px-Aix-Marseille_Universit%C3%A9_%28Logo%29.svg.png">
+    </body>
 </html>

@@ -37,7 +37,7 @@ html, body{
 
 .AMU-logo{
     width: 200px;
-    position: absolute;
+    position: fixed;
     right: 10px;
     bottom: 10px;
     border: 5px solid #e9ecef;
@@ -248,4 +248,51 @@ td{
     height: 20%;
     margin-right: 0%;
     margin-left: 0%;
+}
+/*======================help-request-list========================*/
+#bodyHelpRequestList{
+    text-align: center;
+    display: block;
+    background: linear-gradient(0.25turn,rgba(255,217,147,1) 0%, white 25%, white 75% ,rgba(163,232,255,1));
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-duration: 0.4s;
+    animation-delay:0.4s;
+    animation-name:pop;
+}
+
+#containerList{
+    width:90%;
+    margin-left: 5%;
+    display: block;
+    text-align: left;
+}
+
+.helpRequest{
+    display: inline-block;
+    width:47%;
+    border: 0px;
+    border-radius: 20px;
+    background: white;
+    margin:1%;
+    padding:1%;
+    transition-duration: 0.4s;
+}
+
+.helpRequest:hover{
+    background: darkgray;
+}
+
+#return{
+    width:50%;
+    height:10%;
+    margin:2.5%;
+    border:0px;
+    border-radius:15px;
+    background: #5baccf;
+    transition-duration: 0.4s;
+}
+
+#return:hover{
+    background: #3d7e9a;
 }
