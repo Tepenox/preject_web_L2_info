@@ -44,6 +44,19 @@ html, body{
     background-color: white;
     border-radius: 0.5em;
 }
+
+/*====================Logout=================================*/
+#bodylogout{
+    padding-top:5%;
+    text-align: center;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-duration: 0.4s;
+    animation-delay:0.4s;
+    animation-name:pop;
+}
+
+
 /*====================Login Page=============================*/
 #bodyLoginPage{
     background-image: url("https://cdn.discordapp.com/attachments/637318134834921502/704728854312255528/Helping_each_others.png");
@@ -273,14 +286,23 @@ td{
     width:47%;
     border: 0px;
     border-radius: 20px;
-    background: white;
+    background: #f0f0f0;
     margin:1%;
-    padding:1%;
+    padding:0%;
     transition-duration: 0.4s;
 }
 
+.helpRequest h1{
+    width:100%;
+    border:0px;
+    border-top-right-radius:20px;
+    border-top-left-radius:20px;
+    background:#3456ff;
+}
+
+
 .helpRequest:hover{
-    background: darkgray;
+    opacity:0.7;
 }
 
 #return{
