@@ -46,9 +46,10 @@ html, body{
 }
 /*====================Login Page=============================*/
 #bodyLoginPage{
-    background-image: url("https://i.pinimg.com/originals/0a/07/49/0a07496f29ff32163f3d55d8af0d91bb.jpg");
-    background-size: 1600px;
+    background-image: url("https://cdn.discordapp.com/attachments/637318134834921502/704728854312255528/Helping_each_others.png");
+    background-size: 1550px;
     background-repeat: no-repeat;
+    background-position-y: 17%;
     min-width: 1500px;
     padding-top: 5%;
     text-align: center;
