@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversation With </title>
+    <title>Conversation </title>
 </head>
 <body>
+    <h1><span style="text-transform: uppercase;">{{receiver.last_name}}</span> {{receiver.first_name}}</h1>
     {{#data}}
         <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}} {{#ownedByCurrentUser}} <span style="color: red;">(me)</span>{{/ownedByCurrentUser}}</h2>
         <p><b>{{message}}</b> at {{date}}</p>
     {{/data}}
-    <form action="/messages/{{receiverId}}" method="POST">
+    <form action="/messages/{{receiver.id}}" method="POST">
         message :<input type="text" name="message" autofocus>
     </form>
 </body>

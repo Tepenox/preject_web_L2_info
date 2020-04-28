@@ -10,9 +10,19 @@
     <h3> by <span style="text-transform: uppercase;">{{ownerLastName}}</span> {{ownerFirstName}}</h3>
     <p>type:<b>{{type}}</b></p>
     <p>{{description}}</p>
-    <form action="/help-offers/new/{{id}}" method="POST">
+    {{#helpOfferWasntSent}}
+    <form action="/help-offers/new/{{id}}" method="GET">
         <input type="submit" value="send help offer">    
     </form>
+    {{/helpOfferWasntSent}}
+    {{#helpOfferWasSent}}
+    <p style="color: red;">you sent a help offer to this request</p>
+    {{/helpOfferWasSent}}
+
+    {{#isOwnedbyCurrentUser}}
+    <button class="button" type="button" onclick="window.location.href ='/login'">Edit</button>
+    <button class="button" type="button" onclick="window.location.href ='/login'">Delete</button>
+    {{/isOwnedbyCurrentUser}}
 
 </body>
 </html>

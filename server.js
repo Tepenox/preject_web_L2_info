@@ -4,10 +4,11 @@ var User = require('./model/User');
 var HelpRequest = require('./model/HelpRequest');
 var HelpOffer = require('./model/HelpOffer')
 var Message = require('./model/Message');
+var Notification = require('./model/Notifications');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 2; 
+var currentUserId = 3; 
 
 app.use(methodOverride('_method'));
 
@@ -24,6 +25,9 @@ app.use(cookieSession({
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
+
+const Sqlite = require('better-sqlite3');
+var db = new Sqlite('db.sqlite');
 
 app.engine('html', mustache());
 app.set('view engine', 'html');
@@ -115,11 +119,22 @@ app.post('/help-requests', is_authenticated,(req,res) => {
 
 app.get('/help-requests/:id', is_authenticated,(req,res) => {
     console.log(HelpRequest.find(req.params.id));
-    res.render('help-request-details', HelpRequest.find(req.params.id));
+    var helpRequest = HelpRequest.find(req.params.id);
+    var helpOfferWasSent= db.prepare("select * from help_offers where helper_id = ? and request_id = ? ").get(currentUserId,req.params.id);
+    if(helpRequest.owner_id == currentUserId){
+        helpRequest.isOwnedbyCurrentUser = true;
+    }else if(helpOfferWasSent === undefined){
+        helpRequest.helpOfferWasntSent = true;
+    }else {
+        helpRequest.helpOfferWasSent = true;
+    }
+     
+    res.render('help-request-details',helpRequest );
 
 })
 
 app.get('/messages/:id', is_authenticated,(req,res) => {
+    Notification.delete({from_id: req.params.id , receiver_id : currentUserId , type: 'message'}) // deleting corespended message notifications
     var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
     for(message of messages){
         if(message.senderId == currentUserId){
@@ -129,7 +144,7 @@ app.get('/messages/:id', is_authenticated,(req,res) => {
         }
     }
     console.log(messages);
-    res.render('messages', {data : messages , receiverId : req.params.id})
+    res.render('messages', {data : messages , receiver : User.get(req.params.id)})
 
 
 });
@@ -140,23 +155,65 @@ app.post('/messages/:id', is_authenticated, (req,res) => {
         receiver_id : req.params.id ,
         content : req.body.message });
     console.log(id);
+    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' };
+    Notification.delete(notification); //overwrtie old message notifications if exists
+    Notification.create(notification);
     res.redirect('/messages/'+ req.params.id);
     
 });
 
-app.post('/help-offers/new/:id',(req,res) => { // Todo add message
-    var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id });
+app.get('/help-offers/new/:id',(req,res) => { 
+    res.render('help-offers-new',{request_id: req.params.id})
+})
+
+app.post('/help-offers/new/:id',(req,res) => { 
+    console.log(req.params.id);
+    var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
+    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer'});
+    var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id , description: req.body.description});
     console.log(id);
     res.redirect('/help-requests')
 })
 
+
+
 app.get('/help-offers',(req,res) =>{
     console.log(HelpOffer.listForUserId(currentUserId));
-    res.render("help-offers-list",{data:HelpOffer.listForUserId(currentUserId)});
+    res.render("help-offer-list",{data:HelpOffer.listForUserId(currentUserId)});
 })
 
 app.get('/help-offers/:id',(req,res) =>{
-    console.log(req.params.id);
-    res.render("help-offer-details", HelpOffer.find(req.params.id));
+    var helpOffer = HelpOffer.find(req.params.id);
+    var helperId = db.prepare("select helper_id from help_offers where id = ? ").get(req.params.id).helper_id;
+    Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: currentUserId }); 
+    if(helpOffer.accepted == 'true'){
+        helpOffer.showAcceptedMessage = true;
+    }else{
+        helpOffer.showAcceptMessage = true;
+
+    }
+    console.log(helpOffer);
+    
+    res.render("help-offer-details", helpOffer);
 })
+
+
+app.get('/help-offers/:id/accept',(req,res) =>{
+    var helpOffer = HelpOffer.find(req.params.id);
+    helpOffer.accepted = 'true';
+    console.log(helpOffer);
+    HelpOffer.edit(req.params.id,helpOffer);
+    res.redirect('/help-offers/'+ req.params.id)
+})
+
+app.get('/notifications/',(req,res) =>{
+    var notifications = Notification.list(currentUserId);
+    for (notification of notifications ){
+        if (notification.type === 'message' ){
+            notification.isMessageType = 'true';
+        } 
+    }
+    res.render('notifications',{data: notifications})
+});
+
 app.listen(3000, () => console.log('listening on http://localhost:3000'));

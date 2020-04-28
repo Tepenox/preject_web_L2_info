@@ -6,9 +6,20 @@
     <title></title>
 </head>
 <body>
-    <h3>you received a help offer for your request with title: </h3>
+    <h3>You received a help offer for your request with the title: </h3>
     <p><b>{{helpRequestTitle}}</b></p>
-    
+    <p>Help offer from <b><span style="text-transform: uppercase;">{{helperLastName}}</span> {{helperFirstName}}</b></p>
+    <p>on {{date}}</p>
+    <p>Description:</p>
+    <p>{{description}}</p>
+    {{#showAcceptMessage}}
+        <a href="/help-offers/{{id}}/accept">accept this offer</a>
+    {{/showAcceptMessage}}
+    {{#showAcceptedMessage}}  
+    <p>you accepted this help offer <a href="/messages/{{helper_id}}">send a message to <span style="text-transform: uppercase;">{{helperLastName}}</span> {{helperFirstName}}</a></p>
+    {{/showAcceptedMessage}}  
+     
+      
     <!-- <h3>Help Offers received </h3>
     {{#data}}
     <p>help offer from<b><span>{{title}}</span></b></p>
