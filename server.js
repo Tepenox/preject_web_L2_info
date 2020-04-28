@@ -48,6 +48,9 @@ function is_authenticated(req, res, next){
 app.get('/style.css', (req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })
+app.get('/help-requests/style.css', (req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
 
 
 app.get('/', is_authenticated, (req,res) => {
