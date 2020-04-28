@@ -4,7 +4,7 @@ let db = new Sqlite('db.sqlite');
 
 
 exports.create = function (notification)  {
-    var id = db.prepare("insert into notifications (type , from_id , receiver_id , date) values (@type , @from_id , @receiver_id , datetime('now'))").run(notification).lastInsertRowid
+    var id = db.prepare("insert into notifications (type , from_id , receiver_id , date , object_id) values (@type , @from_id , @receiver_id , datetime('now'), @object_id)").run(notification).lastInsertRowid
     return id;
 }
 
