@@ -81,7 +81,6 @@ app.get('/logout',(req,res) =>{
 })
 
 app.get('/signup',(req,res) => {
-    console.log("goto signup page");
     res.render('signup');
 });
 
