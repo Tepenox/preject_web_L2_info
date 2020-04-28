@@ -12,6 +12,11 @@
             <p>You received a new message from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/messages/{{from_id}}">conversation</a></p>
             <p>on {{date}}</p>
         {{/isMessageType}}
+        {{#isGerHelpOfferType}}
+        <p>You received a new help Offer from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/help-offers/{{object_id}}">conversation</a></p>
+            <p>on {{date}}</p>
+        {{/isGerHelpOfferType}}
+
     {{/data}}
 </form>
 </body>
