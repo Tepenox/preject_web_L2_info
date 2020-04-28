@@ -17,9 +17,9 @@ exports.find = function(id){
 
 exports.edit = function (id,helpOffer){
     //cant pass directly the object because of salite3 limitation
-    var id = db.prepare("update help_offers set helper_id = ? ,request_id = ?, description = ?, date = ? , accepted =? where id = ?" )
-    .run(helpOffer.helper_id,helpOffer.request_id,helpOffer.description,helpOffer.date,helpOffer.accepted,id).lastInsertRowid;
-    return id;
+    var result  = db.prepare("update help_offers set helper_id = ? ,request_id = ?, description = ?, date = ? , accepted =? where id = ?" )
+    .run(helpOffer.helper_id,helpOffer.request_id,helpOffer.description,helpOffer.date,helpOffer.accepted,id);
+    return result;
 }
 
 //list helpoffers recived by a user

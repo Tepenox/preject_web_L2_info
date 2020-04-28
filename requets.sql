@@ -1,3 +1,4 @@
+drop table if exists notifications;
 drop table if exists messages;
 drop table if exists help_offers;
 drop table if exists help_requests;
@@ -51,6 +52,18 @@ CREATE TABLE messages (
         REFERENCES users(id)
 );
 
+CREATE TABLE notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    type TEXT NOT NULL,
+    from_id INTEGER NOT NULL, -- the one who caused the notification
+    receiver_id INTEGER NOT NULL, 
+    date TEXT NOT NULL,
+    FOREIGN KEY (from_id)
+       REFERENCES users(id),
+    FOREIGN KEY (receiver_id)
+        REFERENCES users(id)
+);
+
 
 insert into users (first_name,last_name,age,email,password) values('Anass','EL AFYA',22,'anasselafya@gmail.com','12345678');
 insert into users (first_name,last_name,age,email,password) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678');
@@ -72,6 +85,9 @@ insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-
 insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:13:19' , "do you know how to convert an List of integer to an Array in java");
 insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:13:20' , "yes just use this toArrayMethode in the list class");
 insert into messages (sender_id,receiver_id,date,message) values (3,2, '2020-04-12 23:13:19' , "hey i can offer u help");
+
+
+
 
 -- select messages.id as id , messages.message as message from messages join users on (users.id = messages.sender_id) where (sender_id = 1 and receiver_id = 2) or (sender_id = 2 and receiver_id = 1 ) 
 -- select ho.helper_id as helper_id, ho.request_id as request_id ,ho.date as date, hr.title as helpRequestTitle, u.last_name as helperLastName , u.first_name as helperFirstName from help_offers ho join users u on ho.helper_id = u.id join help_requests hr on hr.id = ho.request_id  where request_id in (select id from help_requests where owner_id = 2);

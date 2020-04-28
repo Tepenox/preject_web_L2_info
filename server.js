@@ -4,10 +4,11 @@ var User = require('./model/User');
 var HelpRequest = require('./model/HelpRequest');
 var HelpOffer = require('./model/HelpOffer')
 var Message = require('./model/Message');
+var Notification = require('./model/Notification');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 1; 
+var currentUserId = 2; 
 
 app.use(methodOverride('_method'));
 
@@ -137,6 +138,9 @@ app.post('/messages/:id', is_authenticated, (req,res) => {
         receiver_id : req.params.id ,
         content : req.body.message });
     console.log(id);
+    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' };
+    Notification.delete(notification); //overwrtie old message notifications if exists
+    Notification.create(notification);
     res.redirect('/messages/'+ req.params.id);
     
 });
@@ -173,5 +177,15 @@ app.get('/help-offers/:id/accept',(req,res) =>{
     HelpOffer.edit(req.params.id,helpOffer);
     res.redirect('/help-offers/'+ req.params.id)
 })
+
+app.get('/notifications/',(req,res) =>{
+    var notifications = Notification.list(currentUserId);
+    for (notification of notifications ){
+        if (notification.type === 'message' ){
+            notification.isMessageType = 'true';
+        } 
+    }
+    res.render('notifications',{data: notifications})
+});
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
