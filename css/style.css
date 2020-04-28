@@ -47,10 +47,9 @@ html, body{
 /*====================Login Page=============================*/
 #bodyLoginPage{
     background-image: url("https://cdn.discordapp.com/attachments/637318134834921502/704728854312255528/Helping_each_others.png");
-    background-size: 1550px;
+    background-size: 100%;
+    background-color: black;
     background-repeat: no-repeat;
-    background-position-y: 17%;
-    min-width: 1500px;
     padding-top: 5%;
     text-align: center;
     opacity: 0;
@@ -118,7 +117,7 @@ button#buttonLogOut{
 #bodyIndexPage button div{
     width:40%;
     height:20%;
-    padding:6%;
+    padding:5%;
     margin-left: 31%;
     border-radius: 20px;
     background:radial-gradient(
