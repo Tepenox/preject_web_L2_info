@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href=""/>
-        <title>Signup</title>
+        <title>VJ Help</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css"/>
         <script>
             function validateForm(){
                 var x = document.forms["TheForm"]["first_name"].value;
@@ -33,47 +34,50 @@
             }
         </script>
     </head>
-    <body>
-        here is the signup page
-
-        <button class="button" type="button" onclick="window.location.href ='/'">Go to index</button>    
-        
-        <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
+    <body id="bodySignupPage">
+        <div class="pageContent">
             <p>
-                <label for="first_name"> Your first name</label>
-                <input type="text" name="first_name" id="first_name"/>
+                Welcome to the Signup Page <br/>
+                Please fill in all the sections
             </p>
-            <p>
-                <label for="last_name"> Your last name</label>
-                <input type="text" name="last_name" id="last_name"/>
-            </p>
-            <p>
-                <label for="age"> Your age </label>
-                <input type="text" name="age" id="age"/>
-                <label for="age"> Years old </label>
-            </p>
+            <button class="button" type="button" onclick="window.location.href ='/'">Go to index</button>    
             
-            <p>
-                <label for="email"> Your email adress </label>
-                <input type="email" name="email" id="email"/>
-            </p>
-            <p>
-                <label for="password"> Your secret secretly secret password </label>
-                <input type="password" name="password" id="password"/>
-            </p>
-            <p> 
-                <label for="password2"> Confirm your password please (got small eyes) </label>
-                <input type="password" name="password2" id="password2"/>
-            </p>
-            <br/>
-            <label for="description">A small description of yourself </label>
-            <br/>
-            <textarea method="post" name ="description" id="description" form="TheForm" rows="4" cols="50" placeholder="Love potatoes"></textarea>
-            <br/>
+            <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
+                <p>
+                    <label for="first_name"> Your first name</label>
+                    <input type="text" name="first_name" id="first_name"/>
+                </p>
+                <p>
+                    <label for="last_name"> Your last name</label>
+                    <input type="text" name="last_name" id="last_name"/>
+                </p>
+                <p>
+                    <label for="age"> Your age </label>
+                    <input type="text" name="age" id="age"/>
+                    <label for="age"> Years old </label>
+                </p>
+                
+                <p>
+                    <label for="email"> Your email adress </label>
+                    <input type="email" name="email" id="email"/>
+                </p>
+                <p>
+                    <label for="password"> Your secret secretly secret password </label>
+                    <input type="password" name="password" id="password"/>
+                </p>
+                <p> 
+                    <label for="password2"> Confirm your password please (got small eyes) </label>
+                    <input type="password" name="password2" id="password2"/>
+                </p>
+                <br/>
+                <label for="description">A small description of yourself </label>
+                <br/>
+                <textarea method="post" name ="description" id="description" form="TheForm" rows="4" cols="50" placeholder="Love potatoes"></textarea>
+                <br/>
 
-            <input type="submit" value="Valider">
-        </form>
-
+                <input type="submit" value="Valider">
+            </form>
+        </div>
     </body>
 </html>
 
