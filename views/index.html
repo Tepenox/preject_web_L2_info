@@ -1,6 +1,23 @@
-here is the index page
-</br>
-<button class="button" type="button" onclick="window.location.href ='/login'">Login</button>
-<button class="button" type="button" onclick="window.location.href ='/signup'">Signup</button>
-<button class="button" type="button" onclick="window.location.href ='help-requests/new'">I Need Help !</button>
-<button class="button" type="button" onclick="window.location.href ='/logout'">log out</button>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>VJ Help</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body id="bodyIndexPage">
+        <p class="lead">Hi there {{data}}, what do you wanna do ?</p>
+        <button class="button" id="buttonNeedHelp" type="button" onclick="window.location.href ='/help-requests/new'">
+            <div class="container">
+                I Need <br/>Help 
+            </div>
+        </button>
+        <button class="button" id="buttonGiveHelp" type="button" onclick="window.location.href ='/help-requests'">
+            <div class="container">
+                I'm gonna help <br/>someone 
+            </div> 
+        </button>
+        <button class="button" id="buttonLogOut" type="button" onclick="window.location.href ='/logout'">log out</button>
+    </body>
+</html>

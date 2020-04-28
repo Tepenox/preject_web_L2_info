@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href=""/>
-        <title>Signup</title>
+        <title>VJ Help</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css"/>
         <script>
             function validateForm(){
                 var x = document.forms["TheForm"]["first_name"].value;
@@ -33,47 +34,51 @@
             }
         </script>
     </head>
-    <body>
-        here is the signup page
-
-        <button class="button" type="button" onclick="window.location.href ='/'">Go to index</button>    
-        
-        <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
-            <p>
-                <label for="first_name"> Your first name</label>
-                <input type="text" name="first_name" id="first_name"/>
-            </p>
-            <p>
-                <label for="last_name"> Your last name</label>
-                <input type="text" name="last_name" id="last_name"/>
-            </p>
-            <p>
-                <label for="age"> Your age </label>
-                <input type="text" name="age" id="age"/>
-                <label for="age"> Years old </label>
-            </p>
-            
-            <p>
-                <label for="email"> Your email adress </label>
-                <input type="email" name="email" id="email"/>
-            </p>
-            <p>
-                <label for="password"> Your secret secretly secret password </label>
-                <input type="password" name="password" id="password"/>
-            </p>
-            <p> 
-                <label for="password2"> Confirm your password please (got small eyes) </label>
-                <input type="password" name="password2" id="password2"/>
-            </p>
-            <br/>
-            <label for="description">A small description of yourself </label>
-            <br/>
-            <textarea method="post" name ="description" id="description" form="TheForm" rows="4" cols="50" placeholder="Love potatoes"></textarea>
-            <br/>
-
-            <input type="submit" value="Valider">
-        </form>
-
+    <body id="bodySignupPage">
+        <p class="lead">
+            Welcome to the Signup Page <br/>
+            Please fill in all the sections
+        </p>
+        <div class="signupContainer">
+            <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
+                <table>
+                    <tr>
+                        <td><label for="first_name"> Your first name</label><br/></td>
+                        <td><input type="text" name="first_name" id="first_name" placeholder="first name..."/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="last_name"> Your last name</label><br/></td>
+                        <td><input type="text" name="last_name" id="last_name" placeholder=" last name..."/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="age"> Your age </label><br/></td>
+                        <td><input type="text" name="age" id="age" placeholder="21..."/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><label for="email"> Your email adress </label><br/></td>
+                        <td><input type="email" name="email" id="email" placeholder="email@gmail.com..."/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password"> Your secret secretly secret password    </label><br/></td>
+                        <td><input type="password" name="password" id="password" placeholder="password..."/></td>
+                    </tr>
+                    <tr> 
+                        <td><label for="password2"> Confirm your password please <br/>(got small eyes) </label></td>
+                        <td><input type="password" name="password2" id="password2" placeholder="password..."/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="description">A small description of yourself <br/></label></td>
+                        <td><textarea method="post" name ="description" id="description" form="TheForm" rows="5" cols="40" placeholder="Love potatoes..."></textarea></td>
+                    </tr>
+                </table>
+                <div style="width:100%;height:10%;">
+                    <input id="ValidForm" type="submit" value="Valider"><br/>
+                    <button id="back" type="button" onclick="window.location.href ='/login'">Return to sign in</button> 
+                </div>
+            </form>
+        </div>
+        <img align="right" class="AMU-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d4/Aix-Marseille_Universit%C3%A9_%28Logo%29.svg/1200px-Aix-Marseille_Universit%C3%A9_%28Logo%29.svg.png">
     </body>
 </html>
 

@@ -38,6 +38,9 @@ function is_authenticated(req, res, next){
     if(req.session.id !== undefined){
         console.log('================middleware================');
         res.locals.authenticated = true;
+        var user = User.getUser(req.session.id);
+        res.locals.first_name=user;
+        console.log('connected as '+res.locals.first_name);
         return next();
     }
     res.redirect('/login');
@@ -50,7 +53,7 @@ app.get('/style.css', (req,res) =>{
 app.get('/', is_authenticated, (req,res) => {
     console.log(res.locals.authenticated);
     if(res.locals.authenticated==true){
-        res.render('index');
+        res.render('index',{data : res.locals.first_name});
     }else{
         res.redirect('/login');
     }
@@ -78,7 +81,6 @@ app.get('/logout',(req,res) =>{
 })
 
 app.get('/signup',(req,res) => {
-    console.log("goto signup page");
     res.render('signup');
 });
 
