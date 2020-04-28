@@ -154,7 +154,7 @@ app.post('/messages/:id', is_authenticated, (req,res) => {
         receiver_id : req.params.id ,
         content : req.body.message });
     console.log(id);
-    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' ,object_id = -1};//TODO: add object id 
+    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' ,object_id : -1};//TODO: add object id 
     Notification.delete(notification); //overwrtie old message notifications if exists
     Notification.create(notification);
     res.redirect('/messages/'+ req.params.id);
