@@ -58,6 +58,7 @@ CREATE TABLE notifications (
     from_id INTEGER NOT NULL, -- the one who caused the notification
     receiver_id INTEGER NOT NULL, 
     date TEXT NOT NULL,
+    object_id TEXT NOT NULL, -- useful te redirect to the object that caused the notification , if we won t need it , the object id will be -1
     FOREIGN KEY (from_id)
        REFERENCES users(id),
     FOREIGN KEY (receiver_id)

@@ -8,7 +8,7 @@ var Notification = require('./model/Notifications');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 3; 
+var currentUserId = 1; 
 
 app.use(methodOverride('_method'));
 
@@ -133,7 +133,7 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 })
 
 app.get('/messages/:id', is_authenticated,(req,res) => {
-    Notification.delete({from_id: req.params.id , receiver_id : currentUserId , type: 'message'}) // deleting corespended message notifications
+    Notification.delete({from_id: req.params.id , receiver_id : currentUserId , type: 'message', object_id : -1 }) // deleting corespended message notifications
     var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
     for(message of messages){
         if(message.senderId == currentUserId){
@@ -154,7 +154,7 @@ app.post('/messages/:id', is_authenticated, (req,res) => {
         receiver_id : req.params.id ,
         content : req.body.message });
     console.log(id);
-    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' };
+    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' ,object_id : -1};//TODO: add object id 
     Notification.delete(notification); //overwrtie old message notifications if exists
     Notification.create(notification);
     res.redirect('/messages/'+ req.params.id);
@@ -168,7 +168,7 @@ app.get('/help-offers/new/:id',(req,res) => {
 app.post('/help-offers/new/:id',(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
-    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer'});
+    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer',object_id: req.params.id});
     var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id , description: req.body.description});
     console.log(id);
     res.redirect('/help-requests')
@@ -184,7 +184,7 @@ app.get('/help-offers',(req,res) =>{
 app.get('/help-offers/:id',(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
     var helperId = db.prepare("select helper_id from help_offers where id = ? ").get(req.params.id).helper_id;
-    Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: currentUserId }); 
+    Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: currentUserId , object_id : req.params.id}); 
     if(helpOffer.accepted == 'true'){
         helpOffer.showAcceptedMessage = true;
     }else{
