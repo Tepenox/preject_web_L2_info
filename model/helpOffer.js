@@ -4,7 +4,7 @@ let db = new Sqlite('db.sqlite');
 
 
 exports.create = function (helpOffer) {
-    var id = db.prepare("insert into help_offers (helper_id, request_id,date) values (@helper_id, @request_id, datetime('now'))").run(helpOffer).lastInsertRowid;
+    var id = db.prepare("insert into help_offers (helper_id, request_id,description,date) values (@helper_id, @request_id, @description, datetime('now'))").run(helpOffer).lastInsertRowid;
     return id;
 }
 

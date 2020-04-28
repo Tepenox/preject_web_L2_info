@@ -3,7 +3,10 @@ const Sqlite = require('better-sqlite3');
 
 let db = new Sqlite('db.sqlite');
 
-
+exports.get =function (id){
+    var user = db.prepare("select * from users where id = ?").get(id);
+    return user;
+}
 
 exports.create =function(formInput){
     var id = db.prepare('insert into users (first_name,last_name,age,email,password,description) VALUES (@first_name,@last_name,@age,@email,@password,@description)').run(formInput).lastInsertRowid;
