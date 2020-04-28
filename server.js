@@ -8,7 +8,7 @@ var Notification = require('./model/Notifications');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 1; 
+var currentUserId = 2; 
 
 app.use(methodOverride('_method'));
 
@@ -168,9 +168,8 @@ app.get('/help-offers/new/:id',(req,res) => {
 app.post('/help-offers/new/:id',(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
-    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer',object_id: req.params.id});
     var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id , description: req.body.description});
-    console.log(id);
+    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer',object_id: id});
     res.redirect('/help-requests')
 })
 
@@ -211,7 +210,7 @@ app.get('/notifications/',(req,res) =>{
         if (notification.type === 'message' ){
             notification.isMessageType = true;
         } else if (notification.type === 'getHelpOffer'){
-            notification.isgetHelpOfferType = true; 
+            notification.isGetHelpOfferType = true; 
         }
     }
     res.render('notifications',{data: notifications})
