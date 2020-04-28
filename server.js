@@ -199,7 +199,7 @@ app.get('/help-offers/:id',(req,res) =>{
 
 app.get('/help-offers/:id/accept',(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
-    helpOffer.accepted = 'true';
+    helpOffer.accepted = true;
     console.log(helpOffer);
     HelpOffer.edit(req.params.id,helpOffer);
     res.redirect('/help-offers/'+ req.params.id)
@@ -209,8 +209,10 @@ app.get('/notifications/',(req,res) =>{
     var notifications = Notification.list(currentUserId);
     for (notification of notifications ){
         if (notification.type === 'message' ){
-            notification.isMessageType = 'true';
-        } 
+            notification.isMessageType = true;
+        } else if (notification.type === 'getHelpOffer'){
+            notification.isgetHelpOfferType = true; 
+        }
     }
     res.render('notifications',{data: notifications})
 });
