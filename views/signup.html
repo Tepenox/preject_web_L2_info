@@ -12,7 +12,7 @@
                     return false;
                 var x = document.forms["TheForm"]["last_name"].value;
                 if(x == "")
-                    return fale;
+                    return false;
                 var x = document.forms["TheForm"]["age"].value;
                 if(x == "" && typeof(x)== number)
                     return false;
@@ -73,7 +73,7 @@
                     </tr>
                 </table>
                 <div style="width:100%;height:10%;">
-                    <input id="ValidForm" type="submit" value="Valider"><br/>
+                    <input id="ValidHelpRequestForm" type="submit" value="Valider"><br/>
                     <button id="back" type="button" onclick="window.location.href ='/login'">Return to sign in</button> 
                 </div>
             </form>
