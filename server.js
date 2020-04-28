@@ -200,6 +200,7 @@ app.get('/help-offers/:id/accept',(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
     helpOffer.accepted = true;
     console.log(helpOffer);
+    Notification.create({from_id: currentUserId , receiver_id: helpOffer.helper_id , type : 'acceptHelpOffer' , object_id: -1});
     HelpOffer.edit(req.params.id,helpOffer);
     res.redirect('/help-offers/'+ req.params.id)
 })
@@ -211,6 +212,8 @@ app.get('/notifications/',(req,res) =>{
             notification.isMessageType = true;
         } else if (notification.type === 'getHelpOffer'){
             notification.isGetHelpOfferType = true; 
+        } else if (notification.type === 'acceptHelpOffer'){
+            notification.isAcceptHelpOfferType = true; 
         }
     }
     res.render('notifications',{data: notifications})
