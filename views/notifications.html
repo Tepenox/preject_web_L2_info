@@ -9,7 +9,7 @@
     <h1>Notifications</h1>
     {{#data}}
         {{#isMessageType}}
-            <p>You received a new message from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}}</b></p>
+            <p>You received a new message from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/messages/{{from_id}}">conversation</a></p>
             <p>on {{date}}</p>
         {{/isMessageType}}
     {{/data}}

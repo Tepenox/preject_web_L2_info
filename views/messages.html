@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversation With </title>
+    <title>Conversation </title>
 </head>
 <body>
+    <h1></h1>
     {{#data}}
         <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}} {{#ownedByCurrentUser}} <span style="color: red;">(me)</span>{{/ownedByCurrentUser}}</h2>
         <p><b>{{message}}</b> at {{date}}</p>

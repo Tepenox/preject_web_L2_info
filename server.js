@@ -118,6 +118,7 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 })
 
 app.get('/messages/:id', is_authenticated,(req,res) => {
+    Notification.delete({from_id: req.params.id , receiver_id : currentUserId , type: 'message'}) // deleting corespended message notifications
     var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
     for(message of messages){
         if(message.senderId == currentUserId){
