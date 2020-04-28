@@ -4,11 +4,11 @@ var User = require('./model/User');
 var HelpRequest = require('./model/HelpRequest');
 var HelpOffer = require('./model/HelpOffer')
 var Message = require('./model/Message');
-var Notification = require('./model/Notification');
+var Notification = require('./model/Notifications');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 1; 
+var currentUserId = 3; 
 
 app.use(methodOverride('_method'));
 
@@ -163,7 +163,10 @@ app.get('/help-offers/new/:id',(req,res) => {
     res.render('help-offers-new',{request_id: req.params.id})
 })
 
-app.post('/help-offers/new/:id',(req,res) => { // Todo add message
+app.post('/help-offers/new/:id',(req,res) => { 
+    console.log(req.params.id);
+    var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
+    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer'});
     var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id , description: req.body.description});
     console.log(id);
     res.redirect('/help-requests')
@@ -178,10 +181,12 @@ app.get('/help-offers',(req,res) =>{
 
 app.get('/help-offers/:id',(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
+    var helperId = db.prepare("select helper_id from help_offers where id = ? ").get(req.params.id).helper_id;
+    Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: currentUserId }); 
     if(helpOffer.accepted == 'true'){
-        helpOffer.showAcceptedMessage = 'true';
+        helpOffer.showAcceptedMessage = true;
     }else{
-        helpOffer.showAcceptMessage = 'true';
+        helpOffer.showAcceptMessage = true;
 
     }
     console.log(helpOffer);
