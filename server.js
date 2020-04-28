@@ -222,5 +222,8 @@ app.get('/notifications/',(req,res) =>{
     }
     res.render('notifications',{data: notifications})
 });
+app.get('*',(req,res) => {
+    res.redirect('/');
+})
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
