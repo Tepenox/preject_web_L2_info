@@ -88,7 +88,7 @@ html, body{
 button#buttonNeedHelp{
     position: absolute;
     left:3%;
-    top:10%;
+    bottom:10%;
     width:40%;
     height:70%;
     background:50%/150% no-repeat url("https://thediwire.com/wp-content/uploads/2018/03/Business-group-with-hands-together-teamwork-concepts-697438336_2001x1503.jpeg");
@@ -103,7 +103,7 @@ button#buttonNeedHelp:hover{
 button#buttonGiveHelp{
     position:absolute;
     right:3%;
-    top:10%;
+    bottom: 10%;
     width:40%;
     height:70%;
     background:55%/120% no-repeat url("https://images.unsplash.com/photo-1494386346843-e12284507169?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80");
