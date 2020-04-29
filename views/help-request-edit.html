@@ -1,25 +1,62 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-    <title>ask for help</title>
-</head>
-<body>
-    <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a style="margin-right:60%;" class="navbar-brand" href="/">VJ Help</a>
-        <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
-        <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
-        <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
-    </div>
-    <h1>Sending Help Offer</h1>
-<form action="/help-offers/{{request_id}}" method="post">
-    description :<input type= "text" name="description">
-    <br>
-    <br>
-    <input type="submit" value="send help offer">
-</form>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>ask for help</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <script>
+            function validateForm(){
+                var x = document.forms["theHelpRequestForm"]["title"].value;
+                if(x == "")
+                    return false;
+                var x = document.forms["theHelpRequestForm"]["type"].value;
+                if(x == "")
+                    return false;
+                var x = document.forms["theHelpRequestForm"]["description"].value;
+                if(x == "")
+                    return false;
+                return true;
+            }
+        </script>
+    </head>
+    <body id="bodyhelpRequestForm">
+        <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a style="margin-right:60%;" class="navbar-brand" href="/">VJ Help</a>
+            <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
+            <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
+            <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
+        </div>
+        <div id="helpRequestFormContainer">
+            <p class="lead">
+                Edit your Help Request<br/>
+                Please fill in all the sections
+            </p>
+            <form action="/help-requests/{{id}}?_method=PUT" method="post" id="theHelpRequestForm" name="theHelpRequestForm" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
+                <p>
+                    <input type= "text" name="title" placeholder="title..." value="{{title}}">
+                </p>
+                
+                <p>
+                    <select name="type" id="type">
+                        <option value="">--Please choose type of help--</option>
+                        <option value="Moral help">Moral help</option>
+                        <option value ="Material help">Material help</option>
+                        <option value="Counselling help">Counselling help</option>
+                        <option value="Coding help">Coding help</option>
+                        <option value="Building/repairing help">Building/repairing help</option>
+                        <option value="other help">other help</option>
+                    </select>
+                </p>
+                <textarea method="post" name ="description" id="description" form="theHelpRequestForm" rows="6" cols="40" placeholder="description..." ></textarea>
+                <input id="ValidHelpRequestForm" type="submit" value="Edit"><br/>
+                <button id="back" type="button" onclick="window.location.href ='/'">Return to main menu</button> 
+            </form>
+        </div>
+        <script>
+            document.getElementById("description").value = "{{description}}";
+        </script>
+        <img align="right" class="AMU-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d4/Aix-Marseille_Universit%C3%A9_%28Logo%29.svg/1200px-Aix-Marseille_Universit%C3%A9_%28Logo%29.svg.png">
+    </body>
 </html>

@@ -8,7 +8,6 @@ var Notification = require('./model/Notifications');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 1; 
 
 app.use(methodOverride('_method'));
 
@@ -160,9 +159,17 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 })
 
 app.get('/help-requests/:id/edit', (req,res) =>{
-
-    res.render('help-requet_edit');
+    var helpRequest = HelpRequest.find(req.params.id);
+    console.log(helpRequest);
+    res.render('help-request-edit',helpRequest);
 });
+
+//edit
+app.put('/help-requests/:id', (req,res) =>{
+    var helpRequest = {title:req.body.title,description: req.body.description , type: req.body.type}
+    HelpRequest.edit(req.params.id , helpRequest)
+    res.redirect('/help-requests/' + req.params.id)
+})
 
 
 
@@ -199,7 +206,7 @@ app.post('/messages/:id', is_authenticated,checkMessageUserid, (req,res) => {
 app.get('/help-offers/new/:id',is_authenticated,(req,res) => { 
     res.render('help-offers-new',{request_id: req.params.id})
 })
-
+//todo check to not send to him self a help offer
 app.post('/help-offers/:id',is_authenticated,(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;

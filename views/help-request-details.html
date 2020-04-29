@@ -30,7 +30,7 @@
     </div>
     
     {{#isOwnedbyCurrentUser}}
-    <button class="button" id="buttonEdit" type="button" onclick="window.location.href ='/login'">Edit</button>
+    <button class="button" id="buttonEdit" type="button" onclick="window.location.href ='/help-requests/{{id}}/edit'">Edit</button>
     <button class="button" id="buttonDelete" type="button" onclick="window.location.href ='/login'">Delete</button>
     {{/isOwnedbyCurrentUser}}
     <button class="button" id="return" type="button" onclick="window.location.href ='/help-requests'">Go back to help request list</button>
