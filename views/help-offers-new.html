@@ -15,7 +15,7 @@
         <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
     </div>
     <h1>Sending Help Offer</h1>
-<form action="/help-offers/new/{{request_id}}" method="post">
+<form action="/help-offers/{{request_id}}" method="post">
     description :<input type= "text" name="description">
     <br>
     <br>

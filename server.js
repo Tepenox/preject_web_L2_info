@@ -8,7 +8,6 @@ var Notification = require('./model/Notifications');
 var app = express();
 var methodOverride = require("method-override");
 
-var currentUserId = 1; 
 
 app.use(methodOverride('_method'));
 
@@ -45,6 +44,30 @@ function is_authenticated(req, res, next){
     }
     res.redirect('/login');
 }
+function checkHelpRequestOwnerShip(req,res,next){
+    var ownerId = db.prepare("select * from help_requests where id = ?").get(req.params.id).owner_id
+    if(req.session.id == ownerId ){
+        return next();
+    }
+    res.redirect('/');
+}
+function checkHelpOfferOwnerShip (req,res,next){
+    var request_id = db.prepare ("select * from help_offers where id = ?").get(req.params.id).request_id 
+    var ownerId = db.prepare("select * from help_requests where id = ?").get(request_id).owner_id
+    if(req.session.id  == ownerId){
+        return next();
+    }
+    res.redirect('/');
+}
+
+function checkMessageUserid (req,res,next){
+    //prevent a user from sending a message to him self
+    if(req.session.id != req.params.id){
+        return next();
+    }
+    res.redirect("/");
+}
+
 app.get('/style.css', (req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })
@@ -143,13 +166,20 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 
 })
 
-function checkMessageUserid (req,res,next){
-    //prevent a user from sending a message to him self
-    if(req.session.id != req.params.id){
-        return next();
-    }
-    res.redirect("/");
-}
+app.get('/help-requests/:id/edit', (req,res) =>{
+    var helpRequest = HelpRequest.find(req.params.id);
+    console.log(helpRequest);
+    res.render('help-request-edit',helpRequest);
+});
+
+//edit
+app.put('/help-requests/:id', (req,res) =>{
+    var helpRequest = {title:req.body.title,description: req.body.description , type: req.body.type}
+    HelpRequest.edit(req.params.id , helpRequest)
+    res.redirect('/help-requests/' + req.params.id)
+})
+
+
 
 app.get('/messages/:id', is_authenticated,checkMessageUserid,(req,res) => {
     Notification.delete({from_id: req.params.id , receiver_id : req.session.id , type: 'message', object_id : -1 }) // deleting corespended message notifications
@@ -184,8 +214,8 @@ app.post('/messages/:id', is_authenticated,checkMessageUserid, (req,res) => {
 app.get('/help-offers/new/:id',is_authenticated,(req,res) => { 
     res.render('help-offers-new',{request_id: req.params.id})
 })
-
-app.post('/help-offers/new/:id',is_authenticated,(req,res) => { 
+//todo check to not send to him self a help offer
+app.post('/help-offers/:id',is_authenticated,(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
     var id = HelpOffer.create({helper_id:req.session.id, request_id :req.params.id , description: req.body.description});
@@ -202,7 +232,7 @@ app.get('/help-offers',is_authenticated,(req,res) =>{
 
 
 
-app.get('/help-offers/:id',is_authenticated,(req,res) =>{
+app.get('/help-offers/:id',is_authenticated,checkHelpOfferOwnerShip,(req,res) => {
     var helpOffer = HelpOffer.find(req.params.id);
     var helperId = db.prepare("select helper_id from help_offers where id = ? ").get(req.params.id).helper_id;
     Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: req.session.id , object_id : req.params.id}); 
@@ -218,7 +248,7 @@ app.get('/help-offers/:id',is_authenticated,(req,res) =>{
 })
 
 
-app.get('/help-offers/:id/accept',is_authenticated,(req,res) =>{
+app.get('/help-offers/:id/accept',is_authenticated,checkHelpOfferOwnerShip,(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
     helpOffer.accepted = 'true';
     console.log(helpOffer);
