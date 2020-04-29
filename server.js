@@ -122,10 +122,16 @@ app.get('/signup',(req,res) => {
 });
 
 app.post('/signup',(req,res) =>{
-    console.log(req.body);
     var id = User.create(req.body);
-    console.log("created with id = " + id);
-    res.render('index');
+    var id = User.connect(req.body);
+    if(id == -1){
+        res.redirect('/login');
+    }
+    else{
+        console.log('connected');
+        req.session.id = id;
+        res.redirect('/');
+    }
 })
 
 app.get('/help-requests', is_authenticated, (req,res) => {
