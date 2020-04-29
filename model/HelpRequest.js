@@ -21,6 +21,10 @@ exports.edit = function(id , helpRequest){
     db.prepare("update help_requests set title = @title , description = @description , type = @type where id = ?").run(helpRequest,id)
 }
 
+exports.delete = function(id){
+    db.prepare("delete from help_requests where id = ?").run(id);
+}
+
 exports.list = function(){
     var requestList = db.prepare('select * from help_requests;').all();
     for (request of requestList ) {

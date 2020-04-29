@@ -158,21 +158,30 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 
 })
 
-app.get('/help-requests/:id/edit', (req,res) =>{
+app.get('/help-requests/:id/edit', is_authenticated,checkHelpRequestOwnerShip,(req,res) =>{
     var helpRequest = HelpRequest.find(req.params.id);
     console.log(helpRequest);
     res.render('help-request-edit',helpRequest);
 });
 
 //edit
-app.put('/help-requests/:id', (req,res) =>{
+app.put('/help-requests/:id',is_authenticated, checkHelpRequestOwnerShip,(req,res) =>{
     var helpRequest = {title:req.body.title,description: req.body.description , type: req.body.type}
     HelpRequest.edit(req.params.id , helpRequest)
     res.redirect('/help-requests/' + req.params.id)
 })
 
+app.get('/help-requests/:id/delete',is_authenticated,checkHelpRequestOwnerShip,(req,res) =>{
+    res.render('help-request-delete',{id:req.params.id})
+})
 
 
+app.delete('/help-requests/:id', is_authenticated, checkHelpRequestOwnerShip, (req,res) =>{
+    db.prepare("delete from help_offers where request_id = ?").run(req.params.id);
+    HelpRequest.delete(req.params.id);
+    res.redirect('/help-requests');
+
+})
 app.get('/messages/:id', is_authenticated,checkMessageUserid,(req,res) => {
     Notification.delete({from_id: req.params.id , receiver_id : req.session.id , type: 'message', object_id : -1 }) // deleting corespended message notifications
     Notification.delete({from_id: req.params.id , receiver_id : req.session.id , type: 'acceptHelpOffer', object_id : -1 }) // deleting corespended help offers accept notifications
