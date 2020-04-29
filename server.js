@@ -83,6 +83,9 @@ app.get('/help-offers/style.css',(req,res) =>{
 app.get('/messages/style.css',(req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })
+app.get('/help-requests/:id/style.css',(req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
 
 app.get('/', is_authenticated, (req,res) => {
     console.log(res.locals.authenticated);
