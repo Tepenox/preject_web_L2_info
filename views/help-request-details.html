@@ -2,27 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
 </head>
-<body>
-    <h1>{{title}}</h1>
-    <h3> by <span style="text-transform: uppercase;">{{ownerLastName}}</span> {{ownerFirstName}}</h3>
-    <p>type:<b>{{type}}</b></p>
-    <p>{{description}}</p>
-    {{#helpOfferWasntSent}}
-    <form action="/help-offers/new/{{id}}" method="GET">
-        <input type="submit" value="send help offer">    
-    </form>
-    {{/helpOfferWasntSent}}
-    {{#helpOfferWasSent}}
-    <p style="color: red;">you sent a help offer to this request</p>
-    {{/helpOfferWasSent}}
-
+<body id="bodyHelpRequestDetails">
+    <div class="pageContent">
+        <h1>{{title}}</h1>
+        <h3> by <span style="text-transform: uppercase;">{{ownerLastName}}</span> {{ownerFirstName}}</h3>
+        <p>type:<b>{{type}}</b></p>
+        <p>{{description}}</p>
+        {{#helpOfferWasntSent}}
+            <form action="/help-offers/new/{{id}}" method="GET" id="FormsendHelp">
+                <input type="submit" value="send help offer">    
+            </form>
+        {{/helpOfferWasntSent}}
+        {{#helpOfferWasSent}}
+            <p class="lead" style="color: red;">you sent a help offer to this request</p>
+        {{/helpOfferWasSent}}
+    </div>
+    
     {{#isOwnedbyCurrentUser}}
-    <button class="button" type="button" onclick="window.location.href ='/login'">Edit</button>
-    <button class="button" type="button" onclick="window.location.href ='/login'">Delete</button>
+    <button class="button" id="buttonEdit" type="button" onclick="window.location.href ='/login'">Edit</button>
+    <button class="button" id="buttonDelete" type="button" onclick="window.location.href ='/login'">Delete</button>
     {{/isOwnedbyCurrentUser}}
-
+    <button class="button" id="return" type="button" onclick="window.location.href ='/help-requests'">Go back to help request list</button>
 </body>
 </html>
