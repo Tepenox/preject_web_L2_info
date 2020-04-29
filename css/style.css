@@ -21,6 +21,7 @@ html, body{
     margin-left: 25%;
     margin-right: 25%;
     background-color: rgba(255, 255, 255, 0.7);
+    height:auto;
 }
 
 
@@ -297,7 +298,7 @@ td{
     border:0px;
     border-top-right-radius:20px;
     border-top-left-radius:20px;
-    background:#3456ff;
+    background:#189dff;
 }
 
 
@@ -375,4 +376,98 @@ td{
 
 #buttonDelete:hover{
     background: #e30000;
+}
+
+/*==============================Notifications=======================*/
+#bodyNotifications{
+    text-align: center;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-duration: 0.4s;
+    animation-delay:0.4s;
+    animation-name:pop;
+}
+
+
+/*============================Help Offer List==========================*/
+#bodyHelpOfferList{
+    text-align: center;
+    display: block;
+    background: linear-gradient(0.25turn,rgba(255,217,147,1) 0%, white 25%, white 75% ,rgba(163,232,255,1));
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-duration: 0.4s;
+    animation-delay:0.4s;
+    animation-name:pop;
+}
+
+/*========================Help Offer Details==========================*/
+
+#bodyHelpOfferDetails{
+    text-align: center;
+    background: linear-gradient(0.25turn,rgba(255,217,147,1) 0%, white 25%, white 75% ,rgba(163,232,255,1));
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-duration: 0.4s;
+    animation-delay:0.4s;
+    animation-name:pop;
+}
+
+/*=====================Messages======================================*/
+
+.notOwnerMessage{
+    margin:1%;
+    padding:1%;
+    text-align:left;
+    margin-left:2.55%;
+    margin-right:auto;
+    width:55%;
+    background:#f3f3f3;
+    border:0px;
+    border-radius:20px;
+}
+
+.ownerMessage{
+    margin:1%;
+    padding:1%;
+    text-align:right;
+    margin-right:2.5%;
+    margin-left:auto;
+    width:55%;
+    background: powderblue;
+    border:0px;
+    border-radius:20px;
+}
+
+#formMessage{
+    width:80%;
+    height:20%;
+    position: fixed;
+    bottom: 0%;
+    border:0%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #ededed;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+#textareaMessage{
+    width:50%;
+    height:80%;
+    border:0px;
+    border-radius: 20px;
+    resize: none;
+    margin:1%;
+    margin-left: -10%;
+}
+
+#sendMessage{
+    position: absolute;
+    margin: 4%;
+    height: 44%;
+    width: 12%;
+    border: 0px;
+    border-radius: 20px;
+    background: #94e394;
 }

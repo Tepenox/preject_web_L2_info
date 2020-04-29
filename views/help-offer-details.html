@@ -7,36 +7,27 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>VJ Help</title>
 </head>
-<body>
+<body id="bodyHelpOfferDetails">
     <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
         <a style="margin-right:60%;" class="navbar-brand" href="/">VJ Help</a>
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
         <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
     </div>
-    <h3>You received a help offer for your request with the title: </h3>
-    <p><b>{{helpRequestTitle}}</b></p>
-    <p>Help offer from <b><span style="text-transform: uppercase;">{{helperLastName}}</span> {{helperFirstName}}</b></p>
-    <p>on {{date}}</p>
-    <p>Description:</p>
-    <p>{{description}}</p>
-    {{#showAcceptMessage}}
-        <a href="/help-offers/{{id}}/accept">accept this offer</a>
-    {{/showAcceptMessage}}
-    {{#showAcceptedMessage}}  
-    <p>you accepted this help offer <a href="/messages/{{helper_id}}">send a message to <span style="text-transform: uppercase;">{{helperLastName}}</span> {{helperFirstName}}</a></p>
-    {{/showAcceptedMessage}}  
-     
-      
-    <!-- <h3>Help Offers received </h3>
-    {{#data}}
-    <p>help offer from<b><span>{{title}}</span></b></p>
-    <br>
-    <p>for your help request with the title:</p>>
-    <h3><b>{{title}}</b></h3>
-    <br>
-    {{/data}}
-     -->
-
+    <br/>
+    <div class="pageContent">
+        <h3>You received a help offer for your request : </h3>
+        <p class="lead"><b>{{helpRequestTitle}}</b></p>
+        <p class="lead">Help offer from <b><span style="text-transform: uppercase;">{{helperLastName}}</span> {{helperFirstName}}</b></p>
+        on {{date}}<br/>
+        <p class="lead">Description:</p>
+        <p class="lead">{{description}}</p>
+        {{#showAcceptMessage}}
+            <button style="background-color:lightgreen;border:0px;border-radius:20px;width:40%;height:15%;margin-bottom:2.5%;" onclick="window.location.href ='/help-offers/{{id}}/accept'">accept this offer</button><br/>
+        {{/showAcceptMessage}}
+        {{#showAcceptedMessage}}  
+        <p class="lead">you accepted this help offer <a href="/messages/{{helper_id}}">send a message to <span style="text-transform: uppercase;">{{helperLastName}}</span> {{helperFirstName}}</a></p>
+        {{/showAcceptedMessage}}  
+    </div>
 </body>
 </html>

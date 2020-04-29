@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Conversation </title>
 </head>
 <body>
@@ -12,13 +14,28 @@
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
         <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
     </div>
-    <h1><span style="text-transform: uppercase;">{{receiver.last_name}}</span> {{receiver.first_name}}</h1>
-    {{#data}}
-        <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}} {{#ownedByCurrentUser}} <span style="color: red;">(me)</span>{{/ownedByCurrentUser}}</h2>
-        <p><b>{{message}}</b> at {{date}}</p>
-    {{/data}}
-    <form action="/messages/{{receiver.id}}" method="POST">
-        message :<input type="text" name="message" autofocus>
-    </form>
+    <div style="text-align:center;margin-bottom:20%;">
+        <p class="lead">
+            here start your beautiful Conversation with <span style="text-transform: uppercase;">{{receiver.last_name}}</span> {{receiver.first_name}}
+        </p>
+        {{#data}}
+            {{#ownedByCurrentUser}}
+                <div class="ownerMessage" >
+                    <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}}</h2>
+                    <p><b>{{message}}</b><br/>{{date}}</p>
+                </div>
+            {{/ownedByCurrentUser}}
+            {{^ownedByCurrentUser}}
+                <div class="notOwnerMessage">
+                    <h2><span style="text-transform: uppercase;">{{senderLastName}}</span> {{senderFirstName}}</h2>
+                    <p><b>{{message}}</b><br/>{{date}}</p>
+                </div>
+            {{/ownedByCurrentUser}}
+        {{/data}}
+        <form action="/messages/{{receiver.id}}" method="POST" id="formMessage">
+            <textarea name="message" id="textareaMessage" placeholder="Aa..."></textarea>
+            <button type="submit" id="sendMessage">Send</button>
+        </form>
+    </div>
 </body>
 </html>
