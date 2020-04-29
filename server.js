@@ -159,6 +159,11 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 
 })
 
+app.get('/help-requests/:id/edit', (req,res) =>{
+
+    res.render('help-requet_edit');
+});
+
 
 
 app.get('/messages/:id', is_authenticated,checkMessageUserid,(req,res) => {
@@ -195,7 +200,7 @@ app.get('/help-offers/new/:id',is_authenticated,(req,res) => {
     res.render('help-offers-new',{request_id: req.params.id})
 })
 
-app.post('/help-offers/new/:id',is_authenticated,(req,res) => { 
+app.post('/help-offers/:id',is_authenticated,(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
     var id = HelpOffer.create({helper_id:req.session.id, request_id :req.params.id , description: req.body.description});
