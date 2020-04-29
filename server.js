@@ -51,7 +51,15 @@ app.get('/style.css', (req,res) =>{
 app.get('/help-requests/style.css', (req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })
-
+app.get('/notifications/style.css',(req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
+app.get('/help-offers/style.css',(req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
+app.get('/messages/style.css',(req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
 
 app.get('/', is_authenticated, (req,res) => {
     console.log(res.locals.authenticated);

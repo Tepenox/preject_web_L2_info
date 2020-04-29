@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Notifications</title>
 </head>
-<body>
+<body id="bodyNotifications">
     <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
         <a style="margin-right:60%;" class="navbar-brand" href="/">VJ Help</a>
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
         <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
     </div>
-    <h1>Notifications</h1>
-    {{#data}}
-        {{#isMessageType}}
-            <p>You received a new message from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/messages/{{from_id}}">conversation</a></p>
-            <p>on {{date}}</p>
-        {{/isMessageType}}
-        {{#isGetHelpOfferType}}
-        <p>You received a new help Offer from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/help-offers/{{object_id}}">details</a></p>
-            <p>on {{date}}</p>
-        {{/isGetHelpOfferType}}
-        {{#isAcceptHelpOfferType}}
-        <p><b><span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b> accepted your help offer , send him a <a href="/messages/{{from_id}}">message</a></p>
-            <p>on {{date}}</p>
-        {{/isAcceptHelpOfferType}}
-
-
-    {{/data}}
-</form>
+    <p class="lead">
+        <h1>Notifications</h1>
+    </p>
+    <div class="pageContent">
+        {{#data}}
+            {{#isMessageType}}
+                <p class="lead">You received a new message from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/messages/{{from_id}}">conversation</a></p>
+                <p class="lead">on {{date}}</p>
+            {{/isMessageType}}
+            {{#isGetHelpOfferType}}
+            <p class="lead">You received a new help Offer from <b> <span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b><a href="/help-offers/{{object_id}}">details</a></p>
+                <p class="lead">on {{date}}</p>
+            {{/isGetHelpOfferType}}
+            {{#isAcceptHelpOfferType}}
+            <p class="lead"><b><span style="text-transform:uppercase;" >{{fromUserLastName}}</span> {{fromUserFirstName}} </b> accepted your help offer , send him a <a href="/messages/{{from_id}}">message</a></p>
+                <p class="lead">on {{date}}</p>
+            {{/isAcceptHelpOfferType}}
+        {{/data}}
+        {{^data.0}} 
+        <p class="lead">
+            Nothing here for now ...
+        </p>
+        {{/data.0}}
+    </div>
 </body>
 </html>
