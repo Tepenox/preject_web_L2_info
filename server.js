@@ -107,7 +107,7 @@ app.get('/help-requests/new', is_authenticated,(req,res) => {
 app.post('/help-requests', is_authenticated,(req,res) => {
     console.log(req.body);
     var helpRequest = {
-        owner_id : currentUserId,
+        owner_id : req.session.id,
         title : req.body.title,
         type : req.body.type,
         description :req.body.description,
@@ -122,8 +122,8 @@ app.post('/help-requests', is_authenticated,(req,res) => {
 app.get('/help-requests/:id', is_authenticated,(req,res) => {
     console.log(HelpRequest.find(req.params.id));
     var helpRequest = HelpRequest.find(req.params.id);
-    var helpOfferWasSent= db.prepare("select * from help_offers where helper_id = ? and request_id = ? ").get(currentUserId,req.params.id);
-    if(helpRequest.owner_id == currentUserId){
+    var helpOfferWasSent= db.prepare("select * from help_offers where helper_id = ? and request_id = ? ").get(req.session.id,req.params.id);
+    if(helpRequest.owner_id == req.session.id){
         helpRequest.isOwnedbyCurrentUser = true;
     }else if(helpOfferWasSent === undefined){
         helpRequest.helpOfferWasntSent = true;
@@ -135,12 +135,20 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
 
 })
 
-app.get('/messages/:id', is_authenticated,(req,res) => {
-    Notification.delete({from_id: req.params.id , receiver_id : currentUserId , type: 'message', object_id : -1 }) // deleting corespended message notifications
-    Notification.delete({from_id: req.params.id , receiver_id : currentUserId , type: 'acceptHelpOffer', object_id : -1 }) // deleting corespended help offers accept notifications
-    var messages = Message.list(currentUserId, req.params.id) // get a list of messages from two user id
+function checkMessageUserid (req,res,next){
+    //prevent a user from sending a message to him self
+    if(req.session.id != req.params.id){
+        return next();
+    }
+    res.redirect("/");
+}
+
+app.get('/messages/:id', is_authenticated,checkMessageUserid,(req,res) => {
+    Notification.delete({from_id: req.params.id , receiver_id : req.session.id , type: 'message', object_id : -1 }) // deleting corespended message notifications
+    Notification.delete({from_id: req.params.id , receiver_id : req.session.id , type: 'acceptHelpOffer', object_id : -1 }) // deleting corespended help offers accept notifications
+    var messages = Message.list(req.session.id, req.params.id) // get a list of messages from two user id
     for(message of messages){
-        if(message.senderId == currentUserId){
+        if(message.senderId == req.session.id){
             message.ownedByCurrentUser = true;
         }else{
             message.ownedByCurrentUser = false;
@@ -152,42 +160,44 @@ app.get('/messages/:id', is_authenticated,(req,res) => {
 
 });
 
-app.post('/messages/:id', is_authenticated, (req,res) => {
+app.post('/messages/:id', is_authenticated,checkMessageUserid, (req,res) => {
     var id = Message.create(
-        {sender_id: currentUserId , 
+        {sender_id: req.session.id , 
         receiver_id : req.params.id ,
         content : req.body.message });
     console.log(id);
-    var notification = {from_id : currentUserId , receiver_id : req.params.id , type : 'message' ,object_id : -1};//TODO: add object id 
+    var notification = {from_id : req.session.id , receiver_id : req.params.id , type : 'message' ,object_id : -1};//TODO: add object id 
     Notification.delete(notification); //overwrtie old message notifications if exists
     Notification.create(notification);
     res.redirect('/messages/'+ req.params.id);
     
 });
 
-app.get('/help-offers/new/:id',(req,res) => { 
+app.get('/help-offers/new/:id',is_authenticated,(req,res) => { 
     res.render('help-offers-new',{request_id: req.params.id})
 })
 
-app.post('/help-offers/new/:id',(req,res) => { 
+app.post('/help-offers/new/:id',is_authenticated,(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
-    var id = HelpOffer.create({helper_id:currentUserId, request_id :req.params.id , description: req.body.description});
-    Notification.create({from_id:currentUserId, receiver_id: requestOwnerId ,type:'getHelpOffer',object_id: id});
+    var id = HelpOffer.create({helper_id:req.session.id, request_id :req.params.id , description: req.body.description});
+    Notification.create({from_id:req.session.id, receiver_id: requestOwnerId ,type:'getHelpOffer',object_id: id});
     res.redirect('/help-requests')
 })
 
 
 
-app.get('/help-offers',(req,res) =>{
-    console.log(HelpOffer.listForUserId(currentUserId));
-    res.render("help-offer-list",{data:HelpOffer.listForUserId(currentUserId)});
+app.get('/help-offers',is_authenticated,(req,res) =>{
+    console.log(HelpOffer.listForUserId(req.session.id));
+    res.render("help-offer-list",{data:HelpOffer.listForUserId(req.session.id)});
 })
 
-app.get('/help-offers/:id',(req,res) =>{
+
+
+app.get('/help-offers/:id',is_authenticated,(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
     var helperId = db.prepare("select helper_id from help_offers where id = ? ").get(req.params.id).helper_id;
-    Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: currentUserId , object_id : req.params.id}); 
+    Notification.delete({type:'getHelpOffer' , from_id: helperId ,receiver_id: req.session.id , object_id : req.params.id}); 
     if(helpOffer.accepted == 'true'){
         helpOffer.showAcceptedMessage = true;
     }else{
@@ -200,17 +210,17 @@ app.get('/help-offers/:id',(req,res) =>{
 })
 
 
-app.get('/help-offers/:id/accept',(req,res) =>{
+app.get('/help-offers/:id/accept',is_authenticated,(req,res) =>{
     var helpOffer = HelpOffer.find(req.params.id);
     helpOffer.accepted = 'true';
     console.log(helpOffer);
     HelpOffer.edit(req.params.id,helpOffer);
-    Notification.create({from_id: currentUserId , receiver_id: helpOffer.helper_id , type : 'acceptHelpOffer' , object_id: -1});
+    Notification.create({from_id: req.session.id , receiver_id: helpOffer.helper_id , type : 'acceptHelpOffer' , object_id: -1});
     res.redirect('/help-offers/'+ req.params.id)
 })
 
-app.get('/notifications/',(req,res) =>{
-    var notifications = Notification.list(currentUserId);
+app.get('/notifications/',is_authenticated,(req,res) =>{
+    var notifications = Notification.list(req.session.id);
     for (notification of notifications ){
         if (notification.type === 'message' ){
             notification.isMessageType = true;
@@ -222,7 +232,7 @@ app.get('/notifications/',(req,res) =>{
     }
     res.render('notifications',{data: notifications})
 });
-app.get('*',(req,res) => {
+app.get('*',is_authenticated,(req,res) => {
     res.redirect('/');
 })
 
