@@ -45,6 +45,11 @@ function is_authenticated(req, res, next){
     }
     res.redirect('/login');
 }
+
+function isEmailExists(email){
+    return db.prepare("select * from users where email = ? ").get(email); 
+}
+
 function checkHelpRequestOwnerShip(req,res,next){
     var ownerId = db.prepare("select * from help_requests where id = ?").get(req.params.id).owner_id
     if(req.session.id == ownerId || isAdmin(req.session.id) ){
@@ -116,6 +121,10 @@ app.get('/signup',redirectIfUserIsConnected,(req,res) => {
 });
 
 app.post('/signup',redirectIfUserIsConnected,(req,res) =>{
+    if(isEmailExists(req.body.email)){
+       res.render('signup',{isEmailExists:'true'});
+       return; 
+    }
     var id = User.create(req.body);
     var id = User.connect(req.body);
     if(id == -1){

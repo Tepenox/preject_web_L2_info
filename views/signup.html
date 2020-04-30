@@ -37,7 +37,12 @@
     <body id="bodySignupPage">
         <p class="lead">
             Welcome to the Signup Page <br/>
-            Please fill in all the sections
+            Please fill in all the sections<br>
+            {{#isEmailExists}}
+                <span style="color: red;">Email already used</span>
+            {{/isEmailExists}}
+
+
         </p>
         <div class="signupContainer">
             <form id="TheForm" name="TheForm" method="post" action="\signup" onsubmit="if(validateForm()){return true}else{alert('please fill out the form correctly');return false;}">
