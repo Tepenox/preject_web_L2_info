@@ -4,13 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="/style.css"/>
     <title>Conversation </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#textareaMessage').keydown(function(){
+                var message = $("textarea").val();
+                if(event.keyCode == 13 && !event.shiftKey){
+                    if(message == ""){
+                        alert("Enter some Text, presenting yourself for example and how you can help");
+                    } else {
+                        $('#formMessage').submit();
+                    }
+                    $("textarea").val('');
+                    return false;
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a style="margin-right:60%;" class="navbar-brand" href="/">VJ Help</a>
+        <a style="margin-right:50%;" class="navbar-brand" href="/">VJ Help</a>
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
+        <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/conversations'">Conversations</button>
         <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
         <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
     </div>
@@ -33,7 +51,7 @@
             {{/ownedByCurrentUser}}
         {{/data}}
         <form action="/messages/{{receiver.id}}" method="POST" id="formMessage">
-            <input type="text" name="message" id="textareaMessage" placeholder="Aa...">
+            <textarea type="text" name="message" id="textareaMessage" placeholder="Aa..."></textarea>
             <button type="submit" id="sendMessage">Send</button>
         </form>
     </div>

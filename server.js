@@ -33,7 +33,7 @@ app.engine('html', mustache());
 app.set('view engine', 'html');
 app.set('views', './views');
 
-//========Middleware=============
+//==================================================Middleware=============
 function is_authenticated(req, res, next){
     if(req.session.id !== undefined){
         console.log('================middleware================');
@@ -75,25 +75,12 @@ function checkMessageUserid (req,res,next){
     res.redirect("/");
 }
 
+//==================================================CSS=============
 app.get('/style.css', (req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })
-app.get('/help-requests/style.css', (req,res) =>{
-    res.sendFile(__dirname+'/css/style.css');
-})
-app.get('/notifications/style.css',(req,res) =>{
-    res.sendFile(__dirname+'/css/style.css');
-})
-app.get('/help-offers/style.css',(req,res) =>{
-    res.sendFile(__dirname+'/css/style.css');
-})
-app.get('/messages/style.css',(req,res) =>{
-    res.sendFile(__dirname+'/css/style.css');
-})
-app.get('/help-requests/:id/style.css',(req,res) =>{
-    res.sendFile(__dirname+'/css/style.css');
-})
 
+//==================================================rout=============
 app.get('/', is_authenticated, (req,res) => {
     console.log(res.locals.authenticated);
     if(res.locals.authenticated==true){
