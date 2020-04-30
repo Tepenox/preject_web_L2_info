@@ -170,9 +170,10 @@ app.get('/help-requests/:id', is_authenticated,(req,res) => {
     var helpOfferWasSent= db.prepare("select * from help_offers where helper_id = ? and request_id = ? ").get(req.session.id,req.params.id);
     if(helpRequest.owner_id == req.session.id || isAdmin(req.session.id)){
         helpRequest.isOwnedbyCurrentUser = true;
-    }else if(helpOfferWasSent === undefined){
+    }
+    if(!(helpRequest.owner_id == req.session.id) && helpOfferWasSent === undefined){
         helpRequest.helpOfferWasntSent = true;
-    }else {
+    }else if(!(helpRequest.owner_id == req.session.id)){
         helpRequest.helpOfferWasSent = true;
     }
      
@@ -186,7 +187,7 @@ app.get('/help-requests/:id/edit', is_authenticated,checkHelpRequestOwnerShip,(r
     res.render('help-request-edit',helpRequest);
 });
 
-//edit
+
 app.put('/help-requests/:id',is_authenticated, checkHelpRequestOwnerShip,(req,res) =>{
     var helpRequest = {title:req.body.title,description: req.body.description , type: req.body.type}
     HelpRequest.edit(req.params.id , helpRequest)
@@ -239,11 +240,23 @@ app.post('/messages/:id', is_authenticated,checkMessageUserid, (req,res) => {
     
 });
 
-app.get('/help-offers/new/:id',is_authenticated,(req,res) => { 
+//prevent th user of not sending him self a help offer
+function verifyHelpOffer (req,res,next){
+    var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
+    if(requestOwnerId != req.session.id){
+        return next();
+    }
+    res.redirect("/");
+
+}
+
+
+app.get('/help-offers/new/:id',is_authenticated,verifyHelpOffer,(req,res) => { 
     res.render('help-offers-new',{request_id: req.params.id})
 })
-//todo check to not send to him self a help offer
-app.post('/help-offers/:id',is_authenticated,(req,res) => { 
+
+
+app.post('/help-offers/:id',is_authenticated, verifyHelpOffer,(req,res) => { 
     console.log(req.params.id);
     var  requestOwnerId = db.prepare("select owner_id from help_requests where id = ?").get(req.params.id).owner_id;
     var id = HelpOffer.create({helper_id:req.session.id, request_id :req.params.id , description: req.body.description});
