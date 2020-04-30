@@ -60,6 +60,12 @@ function checkHelpOfferOwnerShip (req,res,next){
     }
     res.redirect('/');
 }
+function redirectIfUserIsConnected(req,res,next){
+        if(req.session.id == undefined ){
+            return next();     
+        }
+        res.redirect('/');
+}
 
 function checkMessageUserid (req,res,next){
     //prevent a user from sending a message to him self
@@ -97,11 +103,11 @@ app.get('/', is_authenticated, (req,res) => {
     }
 });
 
-app.get('/login',(req,res) => {
+app.get('/login',redirectIfUserIsConnected,(req,res) => {
     res.render('login');
 });
 
-app.post('/login',(req,res) =>{
+app.post('/login',redirectIfUserIsConnected,(req,res) =>{
     var id = User.connect(req.body);
     if(id == -1){
         res.redirect('/login');
@@ -118,11 +124,11 @@ app.get('/logout',(req,res) =>{
     res.render('logout');
 })
 
-app.get('/signup',(req,res) => {
+app.get('/signup',redirectIfUserIsConnected,(req,res) => {
     res.render('signup');
 });
 
-app.post('/signup',(req,res) =>{
+app.post('/signup',redirectIfUserIsConnected,(req,res) =>{
     var id = User.create(req.body);
     var id = User.connect(req.body);
     if(id == -1){
