@@ -47,7 +47,7 @@ function is_authenticated(req, res, next){
 }
 function checkHelpRequestOwnerShip(req,res,next){
     var ownerId = db.prepare("select * from help_requests where id = ?").get(req.params.id).owner_id
-    if(req.session.id == ownerId ){
+    if(req.session.id == ownerId || isAdmin(req.session.id) ){
         return next();
     }
     res.redirect('/');
@@ -84,7 +84,7 @@ app.get('/style.css', (req,res) =>{
 app.get('/', is_authenticated, (req,res) => {
     console.log(res.locals.authenticated);
     if(res.locals.authenticated==true){
-        res.render('index',{data : res.locals.first_name});
+        res.render('index',{data : res.locals.first_name, isAdmin : isAdmin(req.session.id)});
     }else{
         res.redirect('/login');
     }
@@ -151,13 +151,15 @@ app.post('/help-requests', is_authenticated,(req,res) => {
     res.redirect('/help-requests');
     // res.redirect("/request-help-form");
 });
-
+function isAdmin(id){
+    return db.prepare("select * from users where id = ? and is_admin = 'true'").get(id);
+}
 
 app.get('/help-requests/:id', is_authenticated,(req,res) => {
     console.log(HelpRequest.find(req.params.id));
     var helpRequest = HelpRequest.find(req.params.id);
     var helpOfferWasSent= db.prepare("select * from help_offers where helper_id = ? and request_id = ? ").get(req.session.id,req.params.id);
-    if(helpRequest.owner_id == req.session.id){
+    if(helpRequest.owner_id == req.session.id || isAdmin(req.session.id)){
         helpRequest.isOwnedbyCurrentUser = true;
     }else if(helpOfferWasSent === undefined){
         helpRequest.helpOfferWasntSent = true;

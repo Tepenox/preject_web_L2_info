@@ -12,7 +12,8 @@ CREATE TABLE users (
     age INTEGER NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
-    description TEXT
+    description TEXT NOT NULL,
+    is_admin TEXT DEFAULT 'false'
 );
 
 
@@ -78,20 +79,20 @@ CREATE TABLE conversations (
 );
 
 
-insert into users (first_name,last_name,age,email,password) values('Anass','EL AFYA',22,'anasselafya@gmail.com','12345678');
-insert into users (first_name,last_name,age,email,password) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678');
-insert into users (first_name,last_name,age,email,password) values('Nicolas','YAVERIAN',20,'nicolasyaverian@gmail.com','12345678');
+insert into users (first_name,last_name,age,email,password,description,is_admin) values('Anass','EL AFYA',22,'anasselafya@gmail.com','12345678','this is description','true');
+insert into users (first_name,last_name,age,email,password,description,is_admin) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678','this is description','true');
+insert into users (first_name,last_name,age,email,password,description) values('Nicolas','YAVERIAN',20,'nicolasyaverian@gmail.com','12345678','this is description');
 
 
-insert into help_requests (owner_id, date ,type,title,description) values (1 ,datetime('now'),'Coding',' I need help on some css stuff','Pariatur cupidatat dolor magna tempor anim exercitation sint officia commodo mollit incididunt aute aute. Non aliqua cillum velit esse irure. Adipisicing nulla laborum id reprehenderit officia anim anim dolor et eiusmod ipsum officia et culpa. Tempor excepteur laboris consectetur commodo aliqua non dolor do. Nostrud laborum nostrud excepteur id aliqua dolor adipisicing ex pariatur exercitation quis magna adipisicing.');
-insert into help_requests (owner_id, date ,type,title,description) values (2 ,datetime('now'),'Coding','I need help on java stuff','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
-insert into help_requests (owner_id, date ,type,title,description) values (1 ,datetime('now'),'Gardening','I need help on some gardening','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
+insert into help_requests (owner_id, date ,type,title,description) values (1 ,datetime('now'),'Coding help',' I need help on some css stuff','Pariatur cupidatat dolor magna tempor anim exercitation sint officia commodo mollit incididunt aute aute. Non aliqua cillum velit esse irure. Adipisicing nulla laborum id reprehenderit officia anim anim dolor et eiusmod ipsum officia et culpa. Tempor excepteur laboris consectetur commodo aliqua non dolor do. Nostrud laborum nostrud excepteur id aliqua dolor adipisicing ex pariatur exercitation quis magna adipisicing.');
+insert into help_requests (owner_id, date ,type,title,description) values (2 ,datetime('now'),'Coding help','I need help on java stuff','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
+insert into help_requests (owner_id, date ,type,title,description) values (1 ,datetime('now'),'Building/repairing help','I need help on some gardening','Qui esse eu et consequat voluptate cupidatat elit ad incididunt occaecat nostrud adipisicing consequat magna. Non ex pariatur laborum voluptate eu nisi voluptate reprehenderit. Do irure veniam sit exercitation elit voluptate laborum cillum quis aliquip.');
 
 
-insert into help_offers (helper_id , request_id , description, date ) values (1,2,'hey i want to help in this one i m anass' ,datetime('now'));
-insert into help_offers (helper_id , request_id , description,date ) values (3,2, 'hey i want to help in this one i m nicolas',datetime('now'));
-insert into help_offers (helper_id , request_id , description,date ) values (2,1, 'hey i want to help in this one i m cedric',datetime('now'));
-insert into help_offers (helper_id , request_id , description, date ) values (3,1, 'hey i want to help in this one i m nicolas',datetime('now'));
+-- insert into help_offers (helper_id , request_id , description, date ) values (1,2,'hey i want to help in this one i m anass' ,datetime('now'));
+-- insert into help_offers (helper_id , request_id , description,date ) values (3,2, 'hey i want to help in this one i m nicolas',datetime('now'));
+-- insert into help_offers (helper_id , request_id , description,date ) values (2,1, 'hey i want to help in this one i m cedric',datetime('now'));
+-- insert into help_offers (helper_id , request_id , description, date ) values (3,1, 'hey i want to help in this one i m nicolas',datetime('now'));
 
 
 -- insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:11:19' , "thank you for sending a help offer do you think you can help me ?");

@@ -8,13 +8,13 @@
     </head>
     <body id="bodyIndexPage">
         <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
-            <a style="margin-right:50%;" class="navbar-brand" href="/">VJ Help</a>
+            <a style="margin-right:50%;" class="navbar-brand" href="/">VJ Help</a> 
             <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
             <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/conversations'">Conversations</button>
             <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
             <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
         </div>
-        <p style="margin-top: 2%;" class="lead">Hi there {{data}}, what do you wanna do ?</p>
+        <p style="margin-top: 2%;" class="lead">Hi there{{#isAdmin}}<span style="color: red;"> Admin</span>{{/isAdmin}} {{data}}, what do you wanna do ?</p>
         <button class="button" id="buttonNeedHelp" type="button" onclick="window.location.href ='/help-requests/new'">
             <div class="container">
                 I Need <br/>Help 
