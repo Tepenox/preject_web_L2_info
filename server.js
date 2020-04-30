@@ -81,6 +81,9 @@ app.get('/notifications/style.css',(req,res) =>{
 app.get('/help-offers/style.css',(req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })
+app.get('/help-offers/new/style.css',(req,res) =>{
+    res.sendFile(__dirname+'/css/style.css');
+})
 app.get('/messages/style.css',(req,res) =>{
     res.sendFile(__dirname+'/css/style.css');
 })

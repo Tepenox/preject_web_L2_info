@@ -6,9 +6,19 @@
     <title>Conversations</title>
 </head>
 <body>
+    <div id="header" style="text-align: right;" class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a style="margin-right:50%;" class="navbar-brand" href="/">VJ Help</a>
+        <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/help-offers'">Help offers</button>
+        <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/conversations'">Conversations</button>
+        <button style="color: white;border-color: white;margin-right:5%;" class="btn my-2 my-sm-0" onclick="window.location.href ='/notifications/'">Notifications</button>
+        <button style="color: white;border-color: white;margin-right: 0%;margin-left: auto;" class="btn my-2 my-sm-0" onclick="window.location.href ='/logout'">Log out</button>
+    </div>
     <h1>Conversations:</h1>
      {{#data}}   
-     <p><a href="/messages/{{otherUserId}}"><b><span style="text-transform:uppercase;" >{{otherUserLastName}}</span> {{otherUserFirstName}}</b></a> last message: ({{lastMessageSenderName}}) "{{lastMessage}}" on {{update_date}}</p>
+        <p class="lead">
+            <a href="/messages/{{otherUserId}}"><b><span style="text-transform:uppercase;" >{{otherUserLastName}}</span> {{otherUserFirstName}}</b></a> 
+            last message: ({{lastMessageSenderName}}) "{{lastMessage}}" on {{update_date}}
+        </p>
      {{/data}}   
 </body>
 </html>
