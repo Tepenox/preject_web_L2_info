@@ -15,7 +15,7 @@ exports.create =function(formInput){
 
 exports.connect= function(formInput){
     var id = db.prepare('select id from users where email = @email and password = @password').all(formInput);
-    return id.length==0 ? -1 : id[0].id; // to make cleaner
+    return id.length==0 ? -1 : id[0].id;
 }
 
 exports.getUser = function(id){

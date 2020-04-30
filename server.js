@@ -50,6 +50,10 @@ function isEmailExists(email){
     return db.prepare("select * from users where email = ? ").get(email); 
 }
 
+function isAdmin(id){
+    return db.prepare("select * from users where id = ? and is_admin = 'true'").get(id);
+}
+
 function checkHelpRequestOwnerShip(req,res,next){
     var ownerId = db.prepare("select * from help_requests where id = ?").get(req.params.id).owner_id
     if(req.session.id == ownerId || isAdmin(req.session.id) ){
@@ -160,9 +164,7 @@ app.post('/help-requests', is_authenticated,(req,res) => {
     res.redirect('/help-requests');
     // res.redirect("/request-help-form");
 });
-function isAdmin(id){
-    return db.prepare("select * from users where id = ? and is_admin = 'true'").get(id);
-}
+
 
 app.get('/help-requests/:id', is_authenticated,(req,res) => {
     console.log(HelpRequest.find(req.params.id));
@@ -200,7 +202,12 @@ app.get('/help-requests/:id/delete',is_authenticated,checkHelpRequestOwnerShip,(
 
 
 app.delete('/help-requests/:id', is_authenticated, checkHelpRequestOwnerShip, (req,res) =>{
-    db.prepare("delete from help_offers where request_id = ?").run(req.params.id);
+    var helpOffersIds = db.prepare("select id from help_offers where request_id = ? ").all(req.params.id);
+    console.log(helpOffersIds);
+    for(helpOffersId of helpOffersIds){ //deleting notifications
+        db.prepare("delete from notifications where type = 'getHelpOffer' and object_id = ?").run(helpOffersId.id);
+    }
+    db.prepare("delete from help_offers where request_id = ?").run(req.params.id); // deleting help offers
     HelpRequest.delete(req.params.id);
     res.redirect('/help-requests');
 
