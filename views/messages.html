@@ -33,7 +33,7 @@
             {{/ownedByCurrentUser}}
         {{/data}}
         <form action="/messages/{{receiver.id}}" method="POST" id="formMessage">
-            <textarea name="message" id="textareaMessage" placeholder="Aa..."></textarea>
+            <input type="text" name="message" id="textareaMessage" placeholder="Aa...">
             <button type="submit" id="sendMessage">Send</button>
         </form>
     </div>

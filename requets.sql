@@ -1,3 +1,4 @@
+drop table if exists conversations;
 drop table if exists notifications;
 drop table if exists messages;
 drop table if exists help_offers;
@@ -65,6 +66,17 @@ CREATE TABLE notifications (
         REFERENCES users(id)
 );
 
+CREATE TABLE conversations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_user_id INTEGER NOT NULL,
+    second_user_id INTEGER NOT NULL,
+    update_date TEXT NOT NULL,
+    FOREIGN KEY (first_user_id)
+       REFERENCES users(id),
+    FOREIGN KEY (second_user_id)
+        REFERENCES users(id)
+);
+
 
 insert into users (first_name,last_name,age,email,password) values('Anass','EL AFYA',22,'anasselafya@gmail.com','12345678');
 insert into users (first_name,last_name,age,email,password) values('Cedric','MASSAT',21,'cedricmassat@gmail.com','12345678');
@@ -82,11 +94,11 @@ insert into help_offers (helper_id , request_id , description,date ) values (2,1
 insert into help_offers (helper_id , request_id , description, date ) values (3,1, 'hey i want to help in this one i m nicolas',datetime('now'));
 
 
-insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:11:19' , "thank you for sending a help offer do you think you can help me ?");
-insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:12:19' , "for sure what seems to be the problem exactly");
-insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:13:19' , "do you know how to convert an List of integer to an Array in java");
-insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:13:20' , "yes just use this toArrayMethode in the list class");
-insert into messages (sender_id,receiver_id,date,message) values (3,2, '2020-04-12 23:13:19' , "hey i can offer u help");
+-- insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:11:19' , "thank you for sending a help offer do you think you can help me ?");
+-- insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:12:19' , "for sure what seems to be the problem exactly");
+-- insert into messages (sender_id,receiver_id,date,message) values (2,1, '2020-04-12 23:13:19' , "do you know how to convert an List of integer to an Array in java");
+-- insert into messages (sender_id,receiver_id,date,message) values (1,2, '2020-04-12 23:13:20' , "yes just use this toArrayMethode in the list class");
+-- insert into messages (sender_id,receiver_id,date,message) values (3,2, '2020-04-12 23:13:19' , "hey i can offer u help");
 
 
 

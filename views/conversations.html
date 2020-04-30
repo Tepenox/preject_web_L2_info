@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversations</title>
+</head>
+<body>
+    <h1>Conversations:</h1>
+     {{#data}}   
+     <p><a href="/messages/{{otherUserId}}"><b><span style="text-transform:uppercase;" >{{otherUserLastName}}</span> {{otherUserFirstName}}</b></a> last message: ({{lastMessageSenderName}}) "{{lastMessage}}" on {{update_date}}</p>
+     {{/data}}   
+</body>
+</html>

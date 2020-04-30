@@ -5,6 +5,7 @@ var HelpRequest = require('./model/HelpRequest');
 var HelpOffer = require('./model/HelpOffer')
 var Message = require('./model/Message');
 var Notification = require('./model/Notifications');
+var Conversation = require('./model/Conversation')
 var app = express();
 var methodOverride = require("method-override");
 
@@ -225,6 +226,11 @@ app.post('/messages/:id', is_authenticated,checkMessageUserid, (req,res) => {
     var notification = {from_id : req.session.id , receiver_id : req.params.id , type : 'message' ,object_id : -1};//TODO: add object id 
     Notification.delete(notification); //overwrtie old message notifications if exists
     Notification.create(notification);
+    if(Conversation.get(req.session.id, req.params.id) === undefined){
+        Conversation.create(req.session.id, req.params.id)
+    }else{
+        Conversation.update(req.session.id, req.params.id);
+    }
     res.redirect('/messages/'+ req.params.id);
     
 });
@@ -288,6 +294,29 @@ app.get('/notifications/',is_authenticated,(req,res) =>{
     }
     res.render('notifications',{data: notifications})
 });
+
+app.get('/conversations',is_authenticated,(req,res) => {
+    var conversations = Conversation.find(req.session.id);
+
+    for(conversation of conversations){
+        if(conversation.first_user_id == req.session.id){
+            conversation.otherUserId = conversation.second_user_id;
+        } else {
+            conversation.otherUserId = conversation.first_user_id;
+        }
+        var otherUser = db.prepare(" select * from users where id = ? ").get(conversation.otherUserId)
+        conversation.otherUserLastName = otherUser.last_name;
+        conversation.otherUserFirstName = otherUser.first_name; 
+        var lastMessage = Message.list(req.session.id,conversation.otherUserId).reverse()[0];
+        conversation.lastMessage = lastMessage.message;
+        conversation.lastMessageSenderName = lastMessage.senderId == req.session.id ? 
+                                            "you" : String(lastMessage.senderLastName).toUpperCase() + " " + lastMessage.senderFirstName;
+        console.log(conversation.lastMessage );
+    
+    }
+    
+    res.render('conversations',{data: conversations});
+})
 app.get('*',is_authenticated,(req,res) => {
     res.redirect('/');
 })
